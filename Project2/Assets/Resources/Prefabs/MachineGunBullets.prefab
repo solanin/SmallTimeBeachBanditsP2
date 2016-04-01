@@ -11,7 +11,6 @@ GameObject:
   - 33: {fileID: 3314584}
   - 135: {fileID: 13532734}
   - 23: {fileID: 2354718}
-  - 114: {fileID: 11494970}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -30,7 +29,6 @@ GameObject:
   - 33: {fileID: 3359926}
   - 135: {fileID: 13516510}
   - 23: {fileID: 2305330}
-  - 114: {fileID: 11474318}
   m_Layer: 0
   m_Name: Bullet (1)
   m_TagString: Bullet
@@ -49,7 +47,6 @@ GameObject:
   - 33: {fileID: 3317078}
   - 135: {fileID: 13585132}
   - 23: {fileID: 2327404}
-  - 114: {fileID: 11490024}
   m_Layer: 0
   m_Name: Bullet (3)
   m_TagString: Bullet
@@ -65,6 +62,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 471308}
+  - 114: {fileID: 11491144}
   m_Layer: 0
   m_Name: MachineGunBullets
   m_TagString: Untagged
@@ -83,7 +81,6 @@ GameObject:
   - 33: {fileID: 3358702}
   - 135: {fileID: 13567000}
   - 23: {fileID: 2396020}
-  - 114: {fileID: 11486156}
   m_Layer: 0
   m_Name: Bullet (2)
   m_TagString: Bullet
@@ -287,48 +284,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144050}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11474318
+--- !u!114 &11491144
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8114d949ffb6cbd4ba7cd5412595e782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
---- !u!114 &11486156
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 185910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8114d949ffb6cbd4ba7cd5412595e782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
---- !u!114 &11490024
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8114d949ffb6cbd4ba7cd5412595e782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
---- !u!114 &11494970
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120188}
+  m_GameObject: {fileID: 155210}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8114d949ffb6cbd4ba7cd5412595e782, type: 3}
