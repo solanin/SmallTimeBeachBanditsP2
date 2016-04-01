@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 15.0f;
     private Player player;
+    public float damage = 1.0f;
     // Use this for initialization
     void Start()
     {
