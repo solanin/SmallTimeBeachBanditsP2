@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     GameObject self;
     Rigidbody rigidBody;
     bool isJumping;
-    int direction = 1; // -1 left, 1 right
+	int direction = 1; 
 
     //list of usable weapons
     //for the sake of this deliverable, all weapons will be allowed
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
 
     float bulletCool = 0.15f;
     bool laser = false;
+	float prevY;
 
     // Use this for initialization
     void Start()
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W) && !isJumping)
         {
+			isJumping = true;
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
         }
 
@@ -89,13 +91,31 @@ public class Player : MonoBehaviour
         if (transform.position.x > (bg.transform.position.x + 50f))
         {
             bg.transform.position = new Vector3(bg.transform.position.x + 100f, bg.transform.position.y, bg.transform.position.z);
-            transform.position = new Vector3(transform.position.x, -0.49f, transform.position.z);
         }
         else if (transform.position.x < (bg.transform.position.x - 50f))
         {
             bg.transform.position = new Vector3(bg.transform.position.x - 100f, bg.transform.position.y, bg.transform.position.z);
-            transform.position = new Vector3(transform.position.x, -0.49f, transform.position.z);
         }
+
+		//laser ammo check
+		if (laser) {
+			bullets[2]-= Time.deltaTime;
+			if (bullets[2] < 0.0f)
+			{
+				laser = false;
+			}
+		}
+
+		if (isJumping) {
+			if (prevY == transform.position.y)
+			{
+				isJumping = false;
+				Debug.Log("landed");
+			}
+		}
+
+		// Update last pos
+		prevY = transform.position.y;
     }
 
     void fireBullet()
@@ -121,8 +141,9 @@ public class Player : MonoBehaviour
                 }
                 break;
             case 2:
-                if (!laser)
+			if (!laser && bullets[2] > 0.0f)
                 {
+
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     laser = true;
                 }
@@ -152,6 +173,7 @@ public class Player : MonoBehaviour
         }
     }
 
+	/*
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Ground")
@@ -167,6 +189,7 @@ public class Player : MonoBehaviour
             isJumping = true;
         }
     }
+	*/
 
     public int GetDirection()
     {
