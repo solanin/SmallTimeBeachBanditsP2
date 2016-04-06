@@ -118,6 +118,7 @@ public class Player : MonoBehaviour
 		prevY = transform.position.y;
     }
 
+
     void fireBullet()
     {
         //GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
