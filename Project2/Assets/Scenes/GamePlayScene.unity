@@ -293,81 +293,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d82e587722818f34da7030618ce0d732, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &852927842
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 852927843}
-  - 33: {fileID: 852927846}
-  - 65: {fileID: 852927845}
-  - 23: {fileID: 852927844}
-  m_Layer: 0
-  m_Name: HealthBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &852927843
+--- !u!4 &684537002 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852927842}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 2, y: 0.2, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051284200}
-  m_RootOrder: 1
---- !u!23 &852927844
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852927842}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: d49ceb4c6f277de479e2b67abba35943, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!65 &852927845
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852927842}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &852927846
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852927842}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_PrefabParentObject: {fileID: 471624, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+  m_PrefabInternal: {fileID: 1051284198}
 --- !u!1001 &1051284198
 Prefab:
   m_ObjectHideFlags: 0
@@ -411,31 +340,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 194250, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 115736, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 136456, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491122, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 684537002}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1051284199 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 136456, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
-  m_PrefabInternal: {fileID: 1051284198}
---- !u!4 &1051284200 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 463510, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
-  m_PrefabInternal: {fileID: 1051284198}
---- !u!114 &1051284201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1051284199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac31575d1eb93a14f8dea3837462c32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 852927843}
-  BAR_WIDTH_MAX: 2
-  MAX_HEALTH: 100
 --- !u!1001 &1213913034
 Prefab:
   m_ObjectHideFlags: 0

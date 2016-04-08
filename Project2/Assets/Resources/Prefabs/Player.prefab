@@ -12,7 +12,7 @@ GameObject:
   - 92: {fileID: 9280244}
   - 124: {fileID: 12471552}
   - 81: {fileID: 8134494}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   - 114: {fileID: 11406064}
   - 75: {fileID: 7565250}
   - 114: {fileID: 11491122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   - 33: {fileID: 3357830}
   - 65: {fileID: 6500392}
   - 23: {fileID: 2326462}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,6 +328,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

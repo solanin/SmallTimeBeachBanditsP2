@@ -19,8 +19,9 @@ public class Health : MonoBehaviour {
 		healthBar.localScale = new Vector3 ((BAR_WIDTH_MAX * (health/MAX_HEALTH)), 0.2f, 1);
 	}
 
-	public void takeDamage() {
-		health--;
+	public void takeDamage(float damage) {
+		health-=damage;
+        print((BAR_WIDTH_MAX * (health / MAX_HEALTH)));
 	}
 	
 	public bool isDead() {

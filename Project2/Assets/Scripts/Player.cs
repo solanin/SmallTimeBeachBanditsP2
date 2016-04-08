@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private bool shootUp = false;
     private bool shootRight = false;
     private bool shootLeft = false;
+    private Health health;
 
     //list of usable weapons
     //for the sake of this deliverable, all weapons will be allowed
@@ -36,6 +37,12 @@ public class Player : MonoBehaviour
     bool laser = false;
     float prevY;
 
+    bool immune = false;
+    bool visible = true;
+    float flashTimer = 0.1f;
+    float playerFlashTime = 1.0f;
+
+
     // Use this for initialization
     void Start()
     {
@@ -43,12 +50,28 @@ public class Player : MonoBehaviour
         bg = GameObject.Find("BG");
         rigidBody = self.GetComponent<Rigidbody>();
         direction = 1;
+
+        health = GetComponent<Health>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
+        if (immune)
+        {
+            playerFlashTime -= Time.deltaTime;
+            Flash();
+            if (playerFlashTime <= 0.0f)
+            {
+                immune = false;
+                playerFlashTime = 1.0f;
+                flashTimer = 0.1f;
+                GetComponentInChildren<MeshRenderer>().enabled = true;
+                visible = true;
+            }
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             rigidBody.velocity = new Vector3(-10.0f, rigidBody.velocity.y);
@@ -140,7 +163,7 @@ public class Player : MonoBehaviour
                 laser = false;
             }
         }
-        
+
         if (isJumping)
         {
             //if (prevY == transform.position.y && rigidBody.velocity.y == 0.0f)
@@ -153,7 +176,7 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && rigidBody.velocity.y <= 0.0f)
             {
-                if (hit.distance <=1.01f)
+                if (hit.distance <= 1.01f)
                 {
                     isJumping = false;
                     //Debug.Log("Landed");
@@ -163,7 +186,7 @@ public class Player : MonoBehaviour
 
         // Update last pos
         prevY = transform.position.y;
-    } 
+    }
 
 
     void fireBullet()
@@ -193,7 +216,7 @@ public class Player : MonoBehaviour
                 if (!laser && bullets[2] > 0.0f)
                 {
 
-                    Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y, 0.5f), Quaternion.identity);
                     laser = true;
                 }
                 break;
@@ -261,6 +284,46 @@ public class Player : MonoBehaviour
     {
         return shootRight;
     }
-    
+
+    void Flash()
+    {
+        flashTimer -= Time.deltaTime;
+        if (flashTimer <= 0.0f)
+        {
+            if (visible)
+            {
+                GetComponentInChildren<MeshRenderer>().enabled = false;
+                visible = false;
+            }
+            else
+            {
+                GetComponentInChildren<MeshRenderer>().enabled = true;
+                visible = true;
+            }
+            flashTimer = 0.1f;
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Enemy" && !immune)
+        {
+            immune = true;
+            health.takeDamage(3.0f);
+        }
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        if (col.gameObject.tag == "Enemy" && !immune)
+        {
+            immune = true;
+            health.takeDamage(3.0f);
+            if (health.getHealth()<= 0.0f)
+            {
+                //game over code
+            }
+        }
+    }
 }
 
