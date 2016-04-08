@@ -50,7 +50,7 @@ public class EnemyManager : MonoBehaviour {
 	void Update () {
         for (int i = 0; i < enemies.Length; i++)
         {
-            print(enemies[i]);
+            //print(enemies[i]);
             Enemy enemy = enemies[i].GetComponent<Enemy>();
             if (enemy.alive == true)
             {

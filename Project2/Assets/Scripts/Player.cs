@@ -7,11 +7,14 @@ public class Player : MonoBehaviour
     GameObject self;
     Rigidbody rigidBody;
     bool isJumping;
-	int direction = 1; 
+    int direction = 1;
+    private bool shootUp = false;
+    private bool shootRight = false;
+    private bool shootLeft = false;
 
     //list of usable weapons
     //for the sake of this deliverable, all weapons will be allowed
-    string[] weapons = new string[4]{"pistol","machineGun","laser","fireball"};
+    string[] weapons = new string[4] { "pistol", "machineGun", "laser", "fireball" };
 
     //list of bullets remaining
     float[] bullets = new float[4] { 1.0f, 200.0f, 10.0f, 10.0f };
@@ -31,7 +34,7 @@ public class Player : MonoBehaviour
 
     float bulletCool = 0.15f;
     bool laser = false;
-	float prevY;
+    float prevY;
 
     // Use this for initialization
     void Start()
@@ -58,7 +61,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W) && !isJumping)
         {
-			isJumping = true;
+            isJumping = true;
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
         }
 
@@ -87,6 +90,37 @@ public class Player : MonoBehaviour
             }
         }
 
+        //shooting direction
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            shootUp = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            shootUp = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            shootLeft = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            shootLeft = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            shootRight = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            shootRight = false;
+        }
+
         // Screen Wrap
         if (transform.position.x > (bg.transform.position.x + 50f))
         {
@@ -97,25 +131,27 @@ public class Player : MonoBehaviour
             bg.transform.position = new Vector3(bg.transform.position.x - 100f, bg.transform.position.y, bg.transform.position.z);
         }
 
-		//laser ammo check
-		if (laser) {
-			bullets[2]-= Time.deltaTime;
-			if (bullets[2] < 0.0f)
-			{
-				laser = false;
-			}
-		}
+        //laser ammo check
+        if (laser)
+        {
+            bullets[2] -= Time.deltaTime;
+            if (bullets[2] < 0.0f)
+            {
+                laser = false;
+            }
+        }
 
-		if (isJumping) {
-			if (prevY == transform.position.y)
-			{
-				isJumping = false;
-				Debug.Log("landed");
-			}
-		}
+        if (isJumping)
+        {
+            if (prevY == transform.position.y)
+            {
+                isJumping = false;
+                Debug.Log("landed");
+            }
+        }
 
-		// Update last pos
-		prevY = transform.position.y;
+        // Update last pos
+        prevY = transform.position.y;
     }
 
 
@@ -135,14 +171,15 @@ public class Player : MonoBehaviour
             default:
                 break;
             case 1:
-                if (bulletCool >= 0.15f)
+                if (bulletCool >= 0.15f && bullets[1] > 0)
                 {
                     Instantiate(machineGunBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     bulletCool = 0.0f;
+                    bullets[1] -= 4;
                 }
                 break;
             case 2:
-			if (!laser && bullets[2] > 0.0f)
+                if (!laser && bullets[2] > 0.0f)
                 {
 
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
@@ -157,7 +194,7 @@ public class Player : MonoBehaviour
         switch (currentWeapon)
         {
             case 0:
-                Instantiate(pistolBulletPrefab, new Vector3(transform.position.x + (float)direction * 0.5f, transform.position.y), Quaternion.identity);
+                Instantiate(pistolBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                 break;
             case 2:
                 laser = false;
@@ -165,7 +202,7 @@ public class Player : MonoBehaviour
             case 3:
                 if (bullets[3] > 0)
                 {
-                    Instantiate(fireballPrefab, new Vector3(transform.position.x + (float)direction * 0.5f, transform.position.y), Quaternion.identity);
+                    Instantiate(fireballPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     bullets[3] -= 1;
                 }
                 break;
@@ -174,7 +211,7 @@ public class Player : MonoBehaviour
         }
     }
 
-	/*
+    /*
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Ground")
@@ -200,6 +237,18 @@ public class Player : MonoBehaviour
     public bool GetLaser()
     {
         return laser;
+    }
+    public bool GetShootUp()
+    {
+        return shootUp;
+    }
+    public bool GetShootLeft()
+    {
+        return shootLeft;
+    }
+    public bool GetShootRight()
+    {
+        return shootRight;
     }
 }
 
