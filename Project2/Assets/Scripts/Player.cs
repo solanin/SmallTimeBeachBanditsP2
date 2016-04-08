@@ -72,77 +72,79 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            rigidBody.velocity = new Vector3(-10.0f, rigidBody.velocity.y);
-            direction = -1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rigidBody.velocity = new Vector3(10.0f, rigidBody.velocity.y);
-            direction = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.W) && !isJumping)
-        {
-            isJumping = true;
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
-        }
+		if (!health.isDead()) {
+	        if (Input.GetKey(KeyCode.A))
+	        {
+	            rigidBody.velocity = new Vector3(-10.0f, rigidBody.velocity.y);
+	            direction = -1;
+	        }
+	        if (Input.GetKey(KeyCode.D))
+	        {
+	            rigidBody.velocity = new Vector3(10.0f, rigidBody.velocity.y);
+	            direction = 1;
+	        }
+	        if (Input.GetKeyDown(KeyCode.W) && !isJumping)
+	        {
+	            isJumping = true;
+	            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
+	        }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            fireBullet();
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            fireShots();
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            currentWeapon++;
-            if (currentWeapon > 3)
-            {
-                currentWeapon = 0;
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            currentWeapon--;
-            if (currentWeapon < 0)
-            {
-                currentWeapon = 3;
-            }
-        }
+	        if (Input.GetKey(KeyCode.Space))
+	        {
+	            fireBullet();
+	        }
+	        if (Input.GetKeyUp(KeyCode.Space))
+	        {
+	            fireShots();
+	        }
+	        if (Input.GetKeyUp(KeyCode.R))
+	        {
+	            currentWeapon++;
+	            if (currentWeapon > 3)
+	            {
+	                currentWeapon = 0;
+	            }
+	        }
+	        if (Input.GetKeyUp(KeyCode.E))
+	        {
+	            currentWeapon--;
+	            if (currentWeapon < 0)
+	            {
+	                currentWeapon = 3;
+	            }
+	        }
 
-        //shooting direction
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            shootUp = true;
-        }
+	        //shooting direction
+	        if (Input.GetKeyDown(KeyCode.I))
+	        {
+	            shootUp = true;
+	        }
 
-        if (Input.GetKeyUp(KeyCode.I))
-        {
-            shootUp = false;
-        }
+	        if (Input.GetKeyUp(KeyCode.I))
+	        {
+	            shootUp = false;
+	        }
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            shootLeft = true;
-        }
+	        if (Input.GetKeyDown(KeyCode.J))
+	        {
+	            shootLeft = true;
+	        }
 
-        if (Input.GetKeyUp(KeyCode.J))
-        {
-            shootLeft = false;
-        }
+	        if (Input.GetKeyUp(KeyCode.J))
+	        {
+	            shootLeft = false;
+	        }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            shootRight = true;
-        }
+	        if (Input.GetKeyDown(KeyCode.L))
+	        {
+	            shootRight = true;
+	        }
 
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            shootRight = false;
-        }
+	        if (Input.GetKeyUp(KeyCode.L))
+	        {
+	            shootRight = false;
+	        }
+		}
 
         // Screen Wrap
         if (transform.position.x > (bg.transform.position.x + 50f))
@@ -306,24 +308,34 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Enemy" && !immune)
+		if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
         {
             immune = true;
-            health.takeDamage(3.0f);
+            health.takeDamage(5.0f);
+			if (health.isDead())
+			{
+				EndGame();
+			}
         }
     }
 
     void OnCollisionStay(Collision col)
     {
-        if (col.gameObject.tag == "Enemy" && !immune)
+		if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
         {
             immune = true;
-            health.takeDamage(3.0f);
-            if (health.getHealth()<= 0.0f)
+            health.takeDamage(5.0f);
+			if (health.isDead())
             {
-                //game over code
+				EndGame();
             }
         }
     }
+
+	void EndGame(){
+		GameObject.Find("GO").transform.position = new Vector3(transform.position.x, 2.5f, -5);
+		GameObject.Find("GO").GetComponent<MeshRenderer>().enabled = true;
+		GameObject.Find("GOText").GetComponent<MeshRenderer>().enabled = true;
+	}
 }
 

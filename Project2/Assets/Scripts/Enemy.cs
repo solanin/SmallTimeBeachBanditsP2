@@ -8,14 +8,14 @@ public class Enemy : MonoBehaviour {
     GameObject self;
     EnemyManager em;
     public float speed = 25.0f;
-    public float health = 2.0f;
+	private Health health;
     public float damage = 1.0f;
     public bool alive = true;
     public int index;
     float laserCounter = 0.5f;
     float fireballCounter = 0.7f;
     bool fireball = false;
-    bool laser = false;
+	bool laser = false;
 
     int fireballCount = 0;
 
@@ -25,7 +25,9 @@ public class Enemy : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         body = this.GetComponentInParent<Rigidbody>();
         self = body.gameObject;
-        alive = true;
+		alive = true;
+		
+		health = GetComponent<Health>();
 	}
 	
 	// Update is called once per frame
@@ -43,8 +45,8 @@ public class Enemy : MonoBehaviour {
         if (laser)
         {
             if (laserCounter == 0.7f)
-            {
-                health -= 0.1f;
+			{
+				health.takeDamage(1.0f);
             }
             else
             {
@@ -58,8 +60,8 @@ public class Enemy : MonoBehaviour {
         if (fireball)
         {
             if (fireballCounter == 0.5f)
-            {
-                health -= 0.1f;
+			{
+				health.takeDamage(1.0f);
             }
             else
             {
@@ -72,7 +74,7 @@ public class Enemy : MonoBehaviour {
         }
 
 
-        if (health <= 0.0f)
+		if (health.isDead())
         {
             Destroy(self);
             alive = false;
@@ -86,8 +88,8 @@ public class Enemy : MonoBehaviour {
         {
             case "Bullet":
                 GameObject.Destroy(col.gameObject);
-                health -= 1.0f;
-                if (health <= 0.0f)
+				health.takeDamage(1.0f);
+				if (health.isDead())
                 {
                     Destroy(self);
                     alive = false;

@@ -21,11 +21,12 @@ public class Health : MonoBehaviour {
 
 	public void takeDamage(float damage) {
 		health-=damage;
+		if (isDead()) { health = 0.0f; }
         print((BAR_WIDTH_MAX * (health / MAX_HEALTH)));
 	}
 	
 	public bool isDead() {
-		return (health <= 0);
+		return (health <= 0.0f);
 	}
 
 	public void reset() {
