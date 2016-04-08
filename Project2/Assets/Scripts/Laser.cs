@@ -94,6 +94,7 @@ public class Laser : MonoBehaviour
             transform.rotation = Quaternion.identity;
             if (diagonal)
             {
+                distance = 20.0f;
                 if (Physics.Raycast(player.transform.position, new Vector3(direction, 1.0f, 0.0f), out hit, 14.0f) && hit.collider.tag == "Obstacle")
                 {
                     if (hit.distance < distance)
@@ -104,9 +105,8 @@ public class Laser : MonoBehaviour
 
                 
                 float xDist = direction * (distance / Mathf.Sqrt(2));
-                
-                transform.position = new Vector3(player.transform.position.x + (direction * xDist / 2) + (direction * 0.5f), player.transform.position.y + 20, player.transform.position.z);
-                transform.localScale = new Vector3(distance, 0.75f, 1.5f);
+                transform.position = new Vector3(player.transform.position.x + (xDist / 2), player.transform.position.y + (Mathf.Abs(xDist) / 2), player.transform.position.z);
+                transform.localScale = new Vector3(distance, 0.5f, 0.5f);
 
                 if (direction > 0)
                 {
@@ -116,8 +116,7 @@ public class Laser : MonoBehaviour
                 {
                     transform.Rotate(0.0f, 0.0f, -45.0f);
                 }
-
-
+                
             }
             else
             {
@@ -131,7 +130,7 @@ public class Laser : MonoBehaviour
                         }
                     }
                     transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction * 0.5f), player.transform.position.y, player.transform.position.z);
-                    transform.localScale = new Vector3(distance, 0.75f, 1.5f);
+                    transform.localScale = new Vector3(distance, 0.5f, 0.5f);
                 }
                 else
                 {
@@ -144,7 +143,7 @@ public class Laser : MonoBehaviour
                     }
                     transform.position = new Vector3(player.transform.position.x, player.transform.position.y + (distance / 2), player.transform.position.z);
 
-                    transform.localScale = new Vector3(distance, 0.75f, 1.5f);
+                    transform.localScale = new Vector3(0.5f, distance, 0.5f);
                 }
                 
             }
@@ -172,8 +171,8 @@ public class Laser : MonoBehaviour
             //    }
             //}
 
-            transform.localScale = new Vector3(distance, 0.75f, 1.5f);
-            transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction* 0.5f), player.transform.position.y, player.transform.position.z);
+            //transform.localScale = new Vector3(distance, 0.75f, 1.5f);
+            //transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction* 0.5f), player.transform.position.y, player.transform.position.z);
         }
         
     }

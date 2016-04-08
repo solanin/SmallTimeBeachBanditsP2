@@ -24,7 +24,9 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        body.AddForce((player.transform.position - this.transform.position).normalized * speed);
+        Vector3 displacement = (player.transform.position - this.transform.position);
+        displacement.y = 0.0f; 
+        body.AddForce((displacement.normalized* speed));
         if(Mathf.Abs(transform.position.x - player.transform.position.x) > 20.0f)
         {
             Destroy(self);
@@ -35,8 +37,10 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Bullet")
+        Debug.Log(col.gameObject.tag);
+        if (col.gameObject.name == "Bullet")
         {
+            GameObject.Destroy(col.gameObject);
             health -= 1.0f;
             if(health <= 0.0f)
             {

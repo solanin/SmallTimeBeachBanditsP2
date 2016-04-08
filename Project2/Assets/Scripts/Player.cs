@@ -140,19 +140,30 @@ public class Player : MonoBehaviour
                 laser = false;
             }
         }
-
+        
         if (isJumping)
         {
-            if (prevY == transform.position.y)
+            //if (prevY == transform.position.y && rigidBody.velocity.y == 0.0f)
+            //{
+            //    isJumping = false;
+            //    //Debug.Log("landed");
+            //}
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && rigidBody.velocity.y <= 0.0f)
             {
-                isJumping = false;
-                Debug.Log("landed");
+                if (hit.distance <=1.01f)
+                {
+                    isJumping = false;
+                    //Debug.Log("Landed");
+                }
             }
         }
 
         // Update last pos
         prevY = transform.position.y;
-    }
+    } 
 
 
     void fireBullet()
@@ -250,5 +261,6 @@ public class Player : MonoBehaviour
     {
         return shootRight;
     }
+    
 }
 
