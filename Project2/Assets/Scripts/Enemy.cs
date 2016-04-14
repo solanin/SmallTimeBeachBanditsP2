@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour {
     float fireballCounter = 0.7f;
     bool fireball = false;
 	bool laser = false;
+    public bool jumper = false;
+    bool canJump;
 
     int fireballCount = 0;
 
@@ -26,7 +28,7 @@ public class Enemy : MonoBehaviour {
         body = this.GetComponentInParent<Rigidbody>();
         self = body.gameObject;
 		alive = true;
-		
+        canJump = true;
 		health = GetComponent<Health>();
 	}
 	
@@ -72,6 +74,11 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
+        if (jumper && canJump && player.transform.position.y - self.transform.position.y > 1)
+        {
+            body.velocity = new Vector3(body.velocity.x, 30.0f);
+            canJump = false;
+        }
 
 
 		if (health.isDead())
@@ -104,6 +111,9 @@ public class Enemy : MonoBehaviour {
                 
                 fireball = true;
                 fireballCount++;
+                break;
+            case "Ground":
+                canJump = true;
                 break;
             default:
                 break;
