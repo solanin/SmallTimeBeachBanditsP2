@@ -17,7 +17,8 @@ public class Enemy : MonoBehaviour {
     bool fireball = false;
 	bool laser = false;
     public bool jumper = false;
-    bool canJump;
+	bool canJump;
+	public GameObject ui;
 
     int fireballCount = 0;
 
@@ -85,7 +86,8 @@ public class Enemy : MonoBehaviour {
         {
             Destroy(self);
             alive = false;
-            em.GenerateEnemy(index);
+			em.GenerateEnemy(index);
+			ui.GetComponent<UI>().AddToScore();
         }
     }
 

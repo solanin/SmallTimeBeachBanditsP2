@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     string[] weapons = new string[4] { "pistol", "machineGun", "laser", "fireball" };
 
     //list of bullets remaining
-    float[] bullets = new float[4] { 1.0f, 200.0f, 10.0f, 10.0f };
+    float[] bullets = new float[4] { -1.0f, 200.0f, 10.0f, 10.0f };
 
     //index of currently equipped weapon
     int currentWeapon = 0;
@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
     public GameObject pistolBulletPrefab = null;
     public GameObject machineGunBulletPrefab = null;
     public GameObject laserPrefab = null;
-    public GameObject fireballPrefab = null;
+	public GameObject fireballPrefab = null;
+	public GameObject ui;
 
     public int fireballDamage = 10;
     public int pistolDamage = 2;
@@ -52,6 +53,9 @@ public class Player : MonoBehaviour
         direction = 1;
 
         health = GetComponent<Health>();
+		
+		ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
+		ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
     }
 
     // Update is called once per frame
@@ -104,6 +108,8 @@ public class Player : MonoBehaviour
 	            {
 	                currentWeapon = 0;
 	            }
+				ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
+				ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
 	        }
 	        if (Input.GetKeyUp(KeyCode.E))
 	        {
@@ -111,7 +117,9 @@ public class Player : MonoBehaviour
 	            if (currentWeapon < 0)
 	            {
 	                currentWeapon = 3;
-	            }
+				}
+				ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
+				ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
 	        }
 
 	        //shooting direction
@@ -160,10 +168,11 @@ public class Player : MonoBehaviour
         if (laser)
         {
             bullets[2] -= Time.deltaTime;
-            if (bullets[2] < 0.0f)
+            if (bullets[2] <= 0.0f)
             {
                 laser = false;
-            }
+			}
+			ui.GetComponent<UI>().UpdateAmo(bullets[2]);
         }
 
         if (isJumping)
@@ -212,15 +221,17 @@ public class Player : MonoBehaviour
                     Instantiate(machineGunBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     bulletCool = 0.0f;
                     bullets[1] -= 4;
-                }
+					ui.GetComponent<UI>().UpdateAmo(bullets[1]);
+				}
                 break;
             case 2:
                 if (!laser && bullets[2] > 0.0f)
                 {
 
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y, 0.5f), Quaternion.identity);
-                    laser = true;
-                }
+					laser = true;
+					ui.GetComponent<UI>().UpdateAmo(bullets[2]);
+				}
                 break;
         }
     }
@@ -239,7 +250,8 @@ public class Player : MonoBehaviour
                 if (bullets[3] > 0)
                 {
                     Instantiate(fireballPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-                    bullets[3] -= 1;
+					bullets[3] -= 1;
+					ui.GetComponent<UI>().UpdateAmo(bullets[3]);
                 }
                 break;
             default:
