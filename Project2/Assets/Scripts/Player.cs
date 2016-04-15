@@ -97,6 +97,7 @@ public class Player : MonoBehaviour
 	        }
 	        if (Input.GetKeyUp(KeyCode.R))
 	        {
+                if (laser) { laser = false; }
 	            currentWeapon++;
 	            if (currentWeapon > 3)
 	            {
@@ -107,7 +108,8 @@ public class Player : MonoBehaviour
 	        }
 	        if (Input.GetKeyUp(KeyCode.E))
 	        {
-	            currentWeapon--;
+                if (laser) { laser = false; }
+                currentWeapon--;
 	            if (currentWeapon < 0)
 	            {
 	                currentWeapon = 3;
@@ -282,14 +284,14 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-		if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
+        if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
         {
             immune = true;
             health.takeDamage(5.0f);
-			if (health.isDead())
-			{
-				EndGame();
-			}
+            if (health.isDead())
+            {
+                EndGame();
+            }
         }
         else if (col.gameObject.tag == "HealthDrop")
         {
@@ -298,7 +300,9 @@ public class Player : MonoBehaviour
         }
         else if (col.gameObject.tag == "MachineDrop")
         {
-            bullets[1] = 200.0f;
+            bullets[1] += 100.0f;
+            if (bullets[1] > 200.0f)
+                bullets[1] = 200.0f;
             if (currentWeapon == 1)
                 ui.GetComponent<UI>().UpdateAmo(bullets[1]);
 
@@ -306,6 +310,8 @@ public class Player : MonoBehaviour
         }
         else if (col.gameObject.tag == "LaserDrop")
         {
+            bullets[2] += 5.0f;
+            if (bullets[2] > 10.0f)
             bullets[2] = 10.0f;
             if (currentWeapon == 2)
                 ui.GetComponent<UI>().UpdateAmo(bullets[2]);
@@ -313,7 +319,9 @@ public class Player : MonoBehaviour
         }
         else if (col.gameObject.tag == "FireballDrop")
         {
-            bullets[3] = 10.0f;
+            bullets[3] += 5.0f;
+            if (bullets[3] > 10.0f)
+                bullets[3] = 10.0f;
             if (currentWeapon == 3)
                 ui.GetComponent<UI>().UpdateAmo(bullets[3]);
             Destroy(col.gameObject);
