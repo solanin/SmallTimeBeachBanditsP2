@@ -37,11 +37,11 @@ Weapons, Shooting, Pickups
 
 **Jacob Westerback**
 
-Environment, Health bar, UI, High score
+Environment, Health bar, UI, High score, Menus
 
 **Conner Westover**
 
-Enemy types, Enemy spawning, Controls, High score
+Enemy types, Enemy spawning, Controls
 
 ###Post Mortem
 Overall we acomplished what we set out to do. One thing that could be imporved is enemy AI. 
