@@ -18,6 +18,16 @@ There are four kinds of pickups, red is for health, the other corresponds to the
 
 **E,R** - Cycle through weapons
 
+###Enemies
+
+**Blue Enemies** - Normal enemy, 3 shots to kill(pistol) and med speed
+
+**Yellow Enemies** - Fast enemy, 2 shots to kill(pistol) and fast speed
+
+**Green Enemies** - Slow enemy, 4 shots to kill(pistol) and slow speed
+
+**Light Green Enemies** - Jumping enemy, 3 shots to kill(pistol), med speed, and can jump
+
 ###Responsibility
 ####Yanting Cheung####
 
@@ -35,7 +45,7 @@ Health bar
 
 UI
 
-####Connor Westover####
+####Conner Westover####
 
 Enemy types
 

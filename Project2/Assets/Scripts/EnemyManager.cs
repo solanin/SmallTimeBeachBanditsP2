@@ -7,6 +7,8 @@ public class EnemyManager : MonoBehaviour {
     GameObject player;
     int totalAllowedEnemies = 5;
     int killedEnemies = 0;
+    TextMesh score;
+    bool changeArray;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +17,7 @@ public class EnemyManager : MonoBehaviour {
         {
             GenerateEnemy(i);
         }
-        
+        score = GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UI>().score;
 	}
 
     public void GenerateEnemy(int index)
@@ -60,32 +62,87 @@ public class EnemyManager : MonoBehaviour {
         for (int i = 0; i < enemies.Length; i++)
         {
             //print(enemies[i]);
-            Enemy enemy = enemies[i].GetComponent<Enemy>();
-            if(enemy == null)
+            if (enemies[i] == null)
             {
                 GenerateEnemy(i);
                 killedEnemies++;
             }
-            else if (enemy.alive == true)
+            Enemy enemy = enemies[i].GetComponent<Enemy>();
+            if (enemy.alive == true)
             {
                 GenerateEnemy(i);
                 killedEnemies++;
             }
         }
-        if (killedEnemies >= 15)
+
+        switch (score.text)
         {
-            totalAllowedEnemies++;
-            killedEnemies = 0;
-            GameObject[] temp = new GameObject[totalAllowedEnemies];
+            case "0":
+                totalAllowedEnemies = 5;
+                changeArray = true;
+                break;
+            case "15":
+                totalAllowedEnemies = 6;
+                changeArray = true;
+                break;
+            case "30":
+                totalAllowedEnemies = 7;
+                changeArray = true;
+                break;
+            case "50":
+                totalAllowedEnemies = 8;
+                changeArray = true;
+                break;
+            case "70":
+                totalAllowedEnemies = 9;
+                changeArray = true;
+                break;
+            case "100":
+                totalAllowedEnemies = 10;
+                changeArray = true;
+                break;
+            case "135":
+                totalAllowedEnemies = 11;
+                changeArray = true;
+                break;
+            case "175":
+                totalAllowedEnemies = 12;
+                changeArray = true;
+                break;
+            case "220":
+                totalAllowedEnemies = 13;
+                changeArray = true;
+                break;
+            case "270":
+                totalAllowedEnemies = 14;
+                changeArray = true;
+                break;
+            case "350":
+                totalAllowedEnemies = 15;
+                changeArray = true;
+                break;
+        }
+
+        if (changeArray)
+        {
+            GameObject[] temo = new GameObject[totalAllowedEnemies];
+            int make = totalAllowedEnemies;
+            int old = enemies.Length;
+            int enem = make - old;
             for (int i = 0; i < enemies.Length; i++)
             {
-                temp[i] = enemies[i];
+                temo[i] = enemies[i];
             }
             enemies = new GameObject[totalAllowedEnemies];
-            for (int i = 0; i < enemies.Length; i++)
+            for (int i = 0; i < temo.Length; i++)
             {
-                enemies[i] = temp[i];
+                enemies[i] = temo[i];
             }
+            for (int i = 0; i < enem; i++)
+            {
+                GenerateEnemy(i + enem);
+            }
+            changeArray = false;
         }
-	}
+    }
 }

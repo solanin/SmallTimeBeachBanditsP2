@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
-        if (jumper && canJump && player.transform.position.y - self.transform.position.y > 1)
+        if (jumper && canJump && player.transform.position.y - self.transform.position.y >= 0.1F)
         {
             body.velocity = new Vector3(body.velocity.x, 30.0f);
             canJump = false;
@@ -171,6 +171,14 @@ public class Enemy : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    void OnCollisiionStay(Collision col)
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            canJump = true;
         }
     }
 

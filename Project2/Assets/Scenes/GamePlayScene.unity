@@ -98,7 +98,7 @@ GameObject:
   - 23: {fileID: 10794652}
   m_Layer: 12
   m_Name: Platform (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,7 +173,7 @@ GameObject:
   - 23: {fileID: 83604062}
   m_Layer: 0
   m_Name: Wall (R)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -476,7 +476,7 @@ GameObject:
   - 23: {fileID: 446223264}
   m_Layer: 0
   m_Name: Wall (L)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -714,7 +714,7 @@ GameObject:
   - 23: {fileID: 1031787265}
   m_Layer: 12
   m_Name: Platform (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -817,7 +817,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 471624, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 194250, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_Layer
@@ -868,7 +868,7 @@ GameObject:
   - 23: {fileID: 1157216780}
   m_Layer: 12
   m_Name: Platform (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1233,7 +1233,7 @@ Transform:
   m_GameObject: {fileID: 1690463208}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: -4.4825, y: 2.5, z: -5}
-  m_LocalScale: {x: 2.6866713, y: 1.9190496, z: 2.0389953}
+  m_LocalScale: {x: 4.534951, y: 2.3136637, z: 3.7797008}
   m_Children:
   - {fileID: 1598733523}
   m_Father: {fileID: 0}
@@ -1255,7 +1255,7 @@ GameObject:
   - 23: {fileID: 1973072703}
   m_Layer: 12
   m_Name: Platform (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
