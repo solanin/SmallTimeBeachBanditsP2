@@ -97,6 +97,7 @@ public class Player : MonoBehaviour
 	        }
 	        if (Input.GetKeyUp(KeyCode.R))
 	        {
+                if (laser) { laser = false; }
 	            currentWeapon++;
 	            if (currentWeapon > 3)
 	            {
@@ -107,7 +108,8 @@ public class Player : MonoBehaviour
 	        }
 	        if (Input.GetKeyUp(KeyCode.E))
 	        {
-	            currentWeapon--;
+                if (laser) { laser = false; }
+                currentWeapon--;
 	            if (currentWeapon < 0)
 	            {
 	                currentWeapon = 3;
