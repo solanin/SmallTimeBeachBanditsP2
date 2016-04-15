@@ -56,4 +56,13 @@ public class Fireball : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag== "Platform")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    
 }

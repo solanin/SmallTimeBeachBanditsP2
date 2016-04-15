@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
     public bool alive = true;
     public int index;
     float laserCounter = 0.5f;
-    float fireballCounter = 0.7f;
+    float fireballCounter = 0.3f;
     bool fireball = false;
 	bool laser = false;
     public bool jumper = false;
@@ -21,8 +21,13 @@ public class Enemy : MonoBehaviour {
 
     int fireballCount = 0;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject healthDrop;
+    public GameObject machineDrop;
+    public GameObject fireballDrop;
+    public GameObject laserDrop;
+
+    // Use this for initialization
+    void Start () {
         em = GameObject.FindGameObjectWithTag("Respawn").GetComponent<EnemyManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         body = this.GetComponentInParent<Rigidbody>();
@@ -46,31 +51,37 @@ public class Enemy : MonoBehaviour {
 
         if (laser)
         {
-            if (laserCounter == 0.7f)
+            if (laserCounter == 0.5f)
 			{
-				health.takeDamage(1.0f);
+				health.takeDamage(0.05f);
+                laserCounter = 0.0f;
             }
             else
             {
                 laserCounter -= Time.deltaTime;
-                if (laserCounter <= 0.0)
+                if (laserCounter <= 0.0f)
                 {
-                    laserCounter = 0.7f;
+                    laserCounter = 0.5f;
                 }
+            }
+            if (!player.GetComponent<Player>().getLaser())
+            {
+                laser = false;
             }
         }
         if (fireball)
         {
-            if (fireballCounter == 0.5f)
+            if (fireballCounter == 0.3f)
 			{
-				health.takeDamage(1.0f);
+				health.takeDamage(0.1f);
+                fireballCounter = 0.0f;
             }
             else
             {
                 fireballCounter -= Time.deltaTime;
-                if (fireballCounter <= 0.0)
+                if (fireballCounter <= 0.0f)
                 {
-                    fireballCounter = 0.5f;
+                    fireballCounter = 0.3f;
                 }
             }
         }
@@ -78,15 +89,63 @@ public class Enemy : MonoBehaviour {
         {
             body.velocity = new Vector3(body.velocity.x, 30.0f);
             canJump = false;
+
+            Physics.IgnoreLayerCollision(9, 12, true);
         }
 
+        if (!canJump)
+        {
+            if (body.velocity.y < 0.0f)
+            {
+                Physics.IgnoreLayerCollision(9, 12, false);
+            }
+
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && body.velocity.y <= 0.0f)
+            {
+                if (hit.distance <= 1.01f)
+                {
+                    canJump = true;
+                }
+            }
+        }
 
 		if (health.isDead())
         {
+            int drop = Random.Range(0, 20);
+
+            if ( drop < 12)
+            {
+                //drop nothing
+            }
+            else if (drop < 15)
+            {
+                // drop health
+                Instantiate(healthDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop < 17)
+            {
+                //drop machine gun
+                Instantiate(machineDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop < 19)
+            {
+                //drop fire ball
+                Instantiate(fireballDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop == 19)
+            {
+                //drop laser
+                Instantiate(laserDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+
             Destroy(self);
             alive = false;
 			em.GenerateEnemy(index);
-			GameObject.Find("UI").GetComponent<UI>().AddToScore();
+            GameObject.Find("UI").GetComponent<UI>().AddToScore();
+            GameObject.Find("UI").GetComponent<UI>().UpdateScore();
         }
     }
 
@@ -96,17 +155,8 @@ public class Enemy : MonoBehaviour {
         {
             case "Bullet":
                 GameObject.Destroy(col.gameObject);
-				health.takeDamage(1.0f);
-				if (health.isDead())
-                {
-                    Destroy(self);
-                    alive = false;
-                    em.GenerateEnemy(index);
-                }
+				health.takeDamage(0.3f);
                 Destroy(col.gameObject);
-                break;
-            case "Laser":
-                laser = true;
                 break;
             case "Fireball":
                 
@@ -116,8 +166,19 @@ public class Enemy : MonoBehaviour {
             case "Ground":
                 canJump = true;
                 break;
+            case "Platform":
+                canJump = true;
+                break;
             default:
                 break;
+        }
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "Laser")
+        {
+            laser = false;
         }
     }
 
@@ -128,19 +189,12 @@ public class Enemy : MonoBehaviour {
             fireball = true;
             fireballCount++;
         }
-    }
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.tag == "Fireball")
+        else if (col.gameObject.tag == "Laser")
         {
-            fireballCount--;
-            if (fireballCount <= 0)
-            {
-                fireball = false;
-            }
+            laser = true;
         }
     }
-    void OnCollisionExit(Collision col)
+    void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag =="Fireball")
         {

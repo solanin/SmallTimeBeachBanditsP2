@@ -13,10 +13,6 @@ public class Player : MonoBehaviour
     private bool shootLeft = false;
     private Health health;
 
-    //list of usable weapons
-    //for the sake of this deliverable, all weapons will be allowed
-    string[] weapons = new string[4] { "pistol", "machineGun", "laser", "fireball" };
-
     //list of bullets remaining
     float[] bullets = new float[4] { -1.0f, 200.0f, 10.0f, 10.0f };
 
@@ -36,15 +32,12 @@ public class Player : MonoBehaviour
 
     float bulletCool = 0.15f;
     bool laser = false;
-    float prevY;
 
     bool immune = false;
     bool visible = true;
     float flashTimer = 0.1f;
     float playerFlashTime = 1.0f;
 
-
-    // Use this for initialization
     void Start()
     {
         self = GameObject.FindGameObjectWithTag("Player");
@@ -55,10 +48,9 @@ public class Player : MonoBehaviour
         health = GetComponent<Health>();
 		
 		ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
-		ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
+		ui.GetComponent<UI>().UpdateAmo(-1.0f);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
@@ -91,7 +83,9 @@ public class Player : MonoBehaviour
 	        {
 	            isJumping = true;
 	            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
-	        }
+
+                Physics.IgnoreLayerCollision(8, 12, true);
+            }
 
 	        if (Input.GetKey(KeyCode.Space))
 	        {
@@ -171,18 +165,18 @@ public class Player : MonoBehaviour
             if (bullets[2] <= 0.0f)
             {
                 laser = false;
+                bullets[2] = 0.0f;
 			}
 			ui.GetComponent<UI>().UpdateAmo(bullets[2]);
         }
 
         if (isJumping)
         {
-            //if (prevY == transform.position.y && rigidBody.velocity.y == 0.0f)
-            //{
-            //    isJumping = false;
-            //    //Debug.Log("landed");
-            //}
-
+            if (rigidBody.velocity.y < 0.0f)
+            {
+                Physics.IgnoreLayerCollision(8, 12, false);
+            }
+            
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && rigidBody.velocity.y <= 0.0f)
@@ -190,27 +184,14 @@ public class Player : MonoBehaviour
                 if (hit.distance <= 1.01f)
                 {
                     isJumping = false;
-                    //Debug.Log("Landed");
                 }
             }
         }
-
-        // Update last pos
-        prevY = transform.position.y;
     }
 
 
     void fireBullet()
     {
-        //GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //bullet.tag = "Bullet";
-        //bullet.transform.localScale = new Vector3(.1f, .1f, .1f);
-        //bullet.transform.position = this.transform.position + new Vector3(direction, 0, 0);
-        //bullet.AddComponent<Rigidbody>();
-        //bullet.GetComponent<Rigidbody>().velocity = new Vector3(30.0f * direction, 0.0f, 0.0f);
-        //bullet.GetComponent<Rigidbody>().useGravity = false;
-        //Destroy(bullet, 1.50f);
-
         switch (currentWeapon)
         {
             default:
@@ -227,7 +208,6 @@ public class Player : MonoBehaviour
             case 2:
                 if (!laser && bullets[2] > 0.0f)
                 {
-
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y, 0.5f), Quaternion.identity);
 					laser = true;
 					ui.GetComponent<UI>().UpdateAmo(bullets[2]);
@@ -258,24 +238,6 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-
-    /*
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Ground")
-        {
-            isJumping = false;
-        }
-    }
-
-    void OnCollisionExit(Collision col)
-    {
-        if (col.gameObject.tag == "Ground")
-        {
-            isJumping = true;
-        }
-    }
-	*/
 
     public int GetDirection()
     {
@@ -329,6 +291,34 @@ public class Player : MonoBehaviour
 				EndGame();
 			}
         }
+        else if (col.gameObject.tag == "HealthDrop")
+        {
+            health.gainHealth(10.0f);
+            Destroy(col.gameObject);
+        }
+        else if (col.gameObject.tag == "MachineDrop")
+        {
+            bullets[1] = 200.0f;
+            if (currentWeapon == 1)
+                ui.GetComponent<UI>().UpdateAmo(bullets[1]);
+
+            Destroy(col.gameObject);
+        }
+        else if (col.gameObject.tag == "LaserDrop")
+        {
+            bullets[2] = 10.0f;
+            if (currentWeapon == 2)
+                ui.GetComponent<UI>().UpdateAmo(bullets[2]);
+            Destroy(col.gameObject);
+        }
+        else if (col.gameObject.tag == "FireballDrop")
+        {
+            bullets[3] = 10.0f;
+            if (currentWeapon == 3)
+                ui.GetComponent<UI>().UpdateAmo(bullets[3]);
+            Destroy(col.gameObject);
+        }
+
     }
 
     void OnCollisionStay(Collision col)
@@ -342,6 +332,11 @@ public class Player : MonoBehaviour
 				EndGame();
             }
         }
+    }
+
+    public bool getLaser()
+    {
+        return laser;
     }
 
 	void EndGame(){

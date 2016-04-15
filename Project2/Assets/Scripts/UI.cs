@@ -52,7 +52,7 @@ public class UI : MonoBehaviour {
 		}
 	}
 
-	private void UpdateScore() {
+	public void UpdateScore() {
 		score.text = ""+scoreAmt;
 	}
 }

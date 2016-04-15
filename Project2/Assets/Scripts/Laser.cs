@@ -94,16 +94,8 @@ public class Laser : MonoBehaviour
             transform.rotation = Quaternion.identity;
             if (diagonal)
             {
-                distance = 20.0f;
-                if (Physics.Raycast(player.transform.position, new Vector3(direction, 1.0f, 0.0f), out hit, 14.0f) && hit.collider.tag == "Obstacle")
-                {
-                    if (hit.distance < distance)
-                    {
-                        distance = hit.distance;
-                    }
-                }
+                distance = 19.0f;
 
-                
                 float xDist = direction * (distance / Mathf.Sqrt(2));
                 transform.position = new Vector3(player.transform.position.x + (xDist / 2), player.transform.position.y + (Mathf.Abs(xDist) / 2), player.transform.position.z);
                 transform.localScale = new Vector3(distance, 0.5f, 0.5f);
@@ -116,63 +108,22 @@ public class Laser : MonoBehaviour
                 {
                     transform.Rotate(0.0f, 0.0f, -45.0f);
                 }
-                
+
             }
             else
             {
                 if (direction != 0)
                 {
-                    if (Physics.Raycast(player.transform.position, new Vector3(direction, 0.0f, 0.0f), out hit, 14.0f) && hit.collider.tag == "Obstacle")
-                    {
-                        if (hit.distance < distance)
-                        {
-                            distance = hit.distance;
-                        }
-                    }
                     transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction * 0.5f), player.transform.position.y, player.transform.position.z);
                     transform.localScale = new Vector3(distance, 0.5f, 0.5f);
                 }
                 else
                 {
-                    if (Physics.Raycast(player.transform.position, Vector3.up, out hit, 14.0f) && hit.collider.tag == "Obstacle")
-                    {
-                        if (hit.distance < distance)
-                        {
-                            distance = hit.distance;
-                        }
-                    }
                     transform.position = new Vector3(player.transform.position.x, player.transform.position.y + (distance / 2), player.transform.position.z);
 
                     transform.localScale = new Vector3(0.5f, distance, 0.5f);
                 }
-                
             }
-
-
-            
-           
-
-
-            //GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-            //float distance = 13.5f;
-
-            //if (obstacles.Length > 0)
-            //{
-            //    for (int i = 0; i < obstacles.Length; i++)
-            //    {
-            //        if (direction > 0 && (obstacles[i].transform.position.x  - (player.transform.position.x + 0.5f)) < distance)
-            //        {
-            //            distance = obstacles[i].transform.position.x - player.transform.position.x;
-            //        }
-            //        else if (direction < 0 && (player.transform.position.x - 0.5f - obstacles[i].transform.position.x) > distance)
-            //        {
-            //            distance = player.transform.position.x - obstacles[i].transform.position.x;
-            //        }
-            //    }
-            //}
-
-            //transform.localScale = new Vector3(distance, 0.75f, 1.5f);
-            //transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction* 0.5f), player.transform.position.y, player.transform.position.z);
         }
         
     }
