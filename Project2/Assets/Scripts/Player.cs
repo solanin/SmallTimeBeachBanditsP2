@@ -343,6 +343,49 @@ public class Player : MonoBehaviour
 		GameObject.Find("GO").transform.position = new Vector3(transform.position.x, 2.5f, -5);
 		GameObject.Find("GO").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("GOText").GetComponent<MeshRenderer>().enabled = true;
+        GameObject.Find("btnReplay").GetComponent<SpriteRenderer>().enabled = true;
+        GameObject.Find("btnReplay").GetComponent<BoxCollider2D>().enabled = true;
+        GameObject.Find("btnBack").GetComponent<SpriteRenderer>().enabled = true;
+        GameObject.Find("btnBack").GetComponent<BoxCollider2D>().enabled = true;
+
+        int score = ui.GetComponent<UI>().getScore();
+
+        // Load current scores
+        float[] highscore = new float[HighScoreManager.AMT_SAVED];
+		for (int i = 0; i<highscore.Length; i++) {
+			highscore[i] = PlayerPrefs.GetFloat ("Score " + i);
+		}
+
+        bool gotHighScore = false;
+        int atLoc = highscore.Length;
+		for (int i = 0; i<highscore.Length; i++) {
+		    if (score > highscore[i] && !gotHighScore) {
+			    gotHighScore = true;
+				atLoc = i;
+			}
+        }
+
+		// did you reach a highscore?
+		if (gotHighScore && (atLoc<highscore.Length)) {
+            insertHighScore(highscore, atLoc, score);
+            
+			//Save New
+			for (int i = 0; i<HighScoreManager.AMT_SAVED; i++) {
+				PlayerPrefs.SetFloat("Score " + i, highscore[i]);
+			}
+			PlayerPrefs.Save ();
+			Debug.Log("SAVE");
+		}
 	}
+
+	public void insertHighScore(float[] highscore, int insertAt, int score)
+    {
+        for (int i = highscore.Length; i < insertAt; i--)
+        {
+            highscore[i] = highscore[i - 1];
+            Debug.Log(i + " is replaced by " + (i - 1));
+        }
+        highscore[insertAt] = score;
+    }
 }
 

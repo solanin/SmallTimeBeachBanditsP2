@@ -8,7 +8,11 @@ public class UI : MonoBehaviour {
 	public GameObject weapon;
 	private int scoreAmt = 0;
 
-	public void AddToScore() {
+    public int getScore()
+    {
+        return scoreAmt;
+    }
+    public void AddToScore() {
 		scoreAmt++;
 	}
 	public void AddToScore(int num) {
