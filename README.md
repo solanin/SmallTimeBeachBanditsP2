@@ -11,25 +11,34 @@ There are four kinds of pickups, red is for health, the other corresponds to the
 
 ### Controls
 **W,A,D** - Movement, you can jump through platforms but not down.
+
 **J,I,K** - Aim, can be diagonal. If none is pressed it will shoot the facing direction
+
 **Spacebar** - Shoot
+
 **E,R** - Cycle through weapons
 
 ###Responsibility
-**Yanting Cheung**
+####Yanting Cheung####
 
 Weapons
+
 Shooting
+
 Pickups
 
-**Jacob Westerback**
+####Jacob Westerback####
 
 Environment
+
 Health bar
+
 UI
 
-**Connor Westover**
+####Connor Westover####
 
 Enemy types
+
 Enemy spawning
+
 Controls
