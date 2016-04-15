@@ -17,16 +17,19 @@ There are four kinds of pickups, red is for health, the other corresponds to the
 
 ###Responsibility
 **Yanting Cheung**
+
 Weapons
 Shooting
 Pickups
 
 **Jacob Westerback**
+
 Environment
 Health bar
 UI
 
 **Connor Westover**
+
 Enemy types
 Enemy spawning
 Controls
