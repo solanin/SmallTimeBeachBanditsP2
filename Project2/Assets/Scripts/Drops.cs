@@ -7,7 +7,7 @@ public class Drops : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-		Destroy(this.gameObject, 10.0f)
+        Destroy(this.gameObject, 10.0f);
 	}
 	
 	// Update is called once per frame

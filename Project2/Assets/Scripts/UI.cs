@@ -24,7 +24,7 @@ public class UI : MonoBehaviour {
 	{
 		scoreAmt = 0;
 		ChangeWeapon(0);
-		UpdateAmo(0f);
+		UpdateAmo(-1.0f);
 		UpdateScore();
 	}
 
