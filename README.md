@@ -9,6 +9,8 @@ Pistols have infinite ammo but all the other ones have limited ammo.
 But, do not fear, sometimes there are amo drops when you kill an enemy.
 There are four kinds of pickups, red is for health, the others correspond to the color of each weapon's ammo.
 
+Download the EXE here: <Coming Soon>
+
 ### Controls
 **W,A,D** - Movement, you can jump through platforms but not down.
 
@@ -40,3 +42,6 @@ Environment, Health bar, UI
 **Conner Westover**
 
 Enemy types, Enemy spawning, Controls
+
+###Post Mortem
+Overall we acomplished what we set out to do. One thing that could be imporved is enemy AI. 
