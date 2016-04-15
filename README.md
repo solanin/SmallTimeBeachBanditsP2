@@ -29,14 +29,14 @@ There are four kinds of pickups, red is for health, the others correspond to the
 **Light Green Enemies** - Jumping enemy, 3 shots to kill(pistol), med speed, and can jump
 
 ###Responsibility
-####Yanting Cheung####
+**Yanting Cheung**
 
 Weapons, Shooting, Pickups
 
-####Jacob Westerback####
+**Jacob Westerback**
 
 Environment, Health bar, UI
 
-####Conner Westover####
+**Conner Westover**
 
 Enemy types, Enemy spawning, Controls
