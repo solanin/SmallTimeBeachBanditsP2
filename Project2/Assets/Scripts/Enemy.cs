@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour {
                     laserCounter = 0.5f;
                 }
             }
-            if (!player.GetComponent<Player>().getLaser())
+            if (!player.GetComponent<Player>().Laser)
             {
                 laser = false;
             }

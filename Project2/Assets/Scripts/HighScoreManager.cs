@@ -32,4 +32,15 @@ public class HighScoreManager : MonoBehaviour {
 			highscoreLabels [i].text = (i+1)+": "+highscore [i];
 		}
 	}
+
+	public static void insertHighScore(float[] highscore, int insertAt, int score)
+	{
+		//Debug.Log("INSERT " + score + " AT " + (insertAt+1));
+		for (int i = highscore.Length-1; i >= insertAt; i--)
+		{
+			highscore[i] = highscore[i - 1];
+			//Debug.Log("EDITING " + i);
+		}
+		highscore[insertAt] = score;
+	}
 }

@@ -7,11 +7,19 @@ public class Player : MonoBehaviour
     GameObject self;
     Rigidbody rigidBody;
     bool isJumping;
+
     int direction = 1;
+	public int Direction { get { return direction; } }
+
     private bool shootUp = false;
-    private bool shootRight = false;
-    private bool shootLeft = false;
-    private Health health;
+	public bool ShootUp { get { return shootUp; } }
+	private bool shootRight = false;
+	public bool ShootRight { get { return shootRight; } }
+	private bool shootLeft = false;
+	public bool ShootLeft { get { return shootLeft; } }
+
+	private Health health;
+	private GameManager gm;
 
     //list of bullets remaining
     float[] bullets = new float[4] { -1.0f, 200.0f, 10.0f, 10.0f };
@@ -23,7 +31,6 @@ public class Player : MonoBehaviour
     public GameObject machineGunBulletPrefab = null;
     public GameObject laserPrefab = null;
 	public GameObject fireballPrefab = null;
-	public GameObject ui;
 
     public int fireballDamage = 10;
     public int pistolDamage = 2;
@@ -32,6 +39,7 @@ public class Player : MonoBehaviour
 
     float bulletCool = 0.15f;
     bool laser = false;
+	public bool Laser { get { return laser; } }
 
     bool immune = false;
     bool visible = true;
@@ -46,9 +54,7 @@ public class Player : MonoBehaviour
         direction = 1;
 
         health = GetComponent<Health>();
-		
-		ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
-		ui.GetComponent<UI>().UpdateAmo(-1.0f);
+		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     
     void Update()
@@ -103,8 +109,7 @@ public class Player : MonoBehaviour
 	            {
 	                currentWeapon = 0;
 	            }
-				ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
-				ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
+
 	        }
 	        if (Input.GetKeyUp(KeyCode.E))
 	        {
@@ -114,8 +119,7 @@ public class Player : MonoBehaviour
 	            {
 	                currentWeapon = 3;
 				}
-				ui.GetComponent<UI>().ChangeWeapon(currentWeapon);
-				ui.GetComponent<UI>().UpdateAmo(bullets[currentWeapon]);
+				gm.UpdateUI(currentWeapon, bullets);
 	        }
 
 	        //shooting direction
@@ -169,7 +173,7 @@ public class Player : MonoBehaviour
                 laser = false;
                 bullets[2] = 0.0f;
 			}
-			ui.GetComponent<UI>().UpdateAmo(bullets[2]);
+			gm.UpdateAmo(bullets[2]);
         }
 
         if (isJumping)
@@ -203,8 +207,8 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(machineGunBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     bulletCool = 0.0f;
-                    bullets[1] -= 4;
-					ui.GetComponent<UI>().UpdateAmo(bullets[1]);
+					bullets[1] -= 4;
+					gm.UpdateAmo(bullets[1]);
 				}
                 break;
             case 2:
@@ -212,7 +216,7 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y, 0.5f), Quaternion.identity);
 					laser = true;
-					ui.GetComponent<UI>().UpdateAmo(bullets[2]);
+					gm.UpdateAmo(bullets[2]);
 				}
                 break;
         }
@@ -233,34 +237,12 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(fireballPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
 					bullets[3] -= 1;
-					ui.GetComponent<UI>().UpdateAmo(bullets[3]);
+					gm.UpdateAmo(bullets[3]);
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    public int GetDirection()
-    {
-        return direction;
-    }
-
-    public bool GetLaser()
-    {
-        return laser;
-    }
-    public bool GetShootUp()
-    {
-        return shootUp;
-    }
-    public bool GetShootLeft()
-    {
-        return shootLeft;
-    }
-    public bool GetShootRight()
-    {
-        return shootRight;
     }
 
     void Flash()
@@ -290,7 +272,7 @@ public class Player : MonoBehaviour
             health.takeDamage(5.0f);
             if (health.isDead())
             {
-                EndGame();
+                gm.EndGame();
             }
         }
         else if (col.gameObject.tag == "HealthDrop")
@@ -304,7 +286,7 @@ public class Player : MonoBehaviour
             if (bullets[1] > 200.0f)
                 bullets[1] = 200.0f;
             if (currentWeapon == 1)
-                ui.GetComponent<UI>().UpdateAmo(bullets[1]);
+				gm.UpdateAmo(bullets[1]);
 
             Destroy(col.gameObject);
         }
@@ -314,7 +296,7 @@ public class Player : MonoBehaviour
             if (bullets[2] > 10.0f)
             bullets[2] = 10.0f;
             if (currentWeapon == 2)
-                ui.GetComponent<UI>().UpdateAmo(bullets[2]);
+				gm.UpdateAmo(bullets[2]);
             Destroy(col.gameObject);
         }
         else if (col.gameObject.tag == "FireballDrop")
@@ -323,7 +305,7 @@ public class Player : MonoBehaviour
             if (bullets[3] > 10.0f)
                 bullets[3] = 10.0f;
             if (currentWeapon == 3)
-                ui.GetComponent<UI>().UpdateAmo(bullets[3]);
+                gm.UpdateAmo(bullets[3]);
             Destroy(col.gameObject);
         }
 
@@ -337,68 +319,11 @@ public class Player : MonoBehaviour
             health.takeDamage(5.0f);
 			if (health.isDead())
             {
-				EndGame();
+				gm.EndGame();
             }
         }
     }
 
-    public bool getLaser()
-    {
-        return laser;
-    }
-
-	void EndGame(){
-		GameObject.Find("GO").transform.position = new Vector3(transform.position.x, 2.5f, -5);
-		GameObject.Find("GO").GetComponent<MeshRenderer>().enabled = true;
-		GameObject.Find("GOText").GetComponent<MeshRenderer>().enabled = true;
-        GameObject.Find("btnReplay").GetComponent<SpriteRenderer>().enabled = true;
-        GameObject.Find("btnReplay").GetComponent<BoxCollider2D>().enabled = true;
-        GameObject.Find("btnBack").GetComponent<SpriteRenderer>().enabled = true;
-        GameObject.Find("btnBack").GetComponent<BoxCollider2D>().enabled = true;
-
-		int score = ui.GetComponent<UI>().getScore();
-
-        // Load current scores
-        float[] highscore = new float[HighScoreManager.AMT_SAVED];
-		for (int i = 0; i<highscore.Length; i++) {
-			highscore[i] = PlayerPrefs.GetFloat ("Score " + i);
-		}
-
-		// Check
-        bool gotHighScore = false;
-        int atLoc = highscore.Length;
-		for (int i = 0; i<highscore.Length; i++) {
-		    if (score > highscore[i] && !gotHighScore) {
-			    gotHighScore = true;
-				atLoc = i;
-			}
-        }
-
-		// did you reach a highscore?
-		if (gotHighScore && (atLoc<highscore.Length)) {
-            insertHighScore(highscore, atLoc, score);
-            
-			//Save New
-			for (int i = 0; i<HighScoreManager.AMT_SAVED; i++) {
-				PlayerPrefs.SetFloat("Score " + i, highscore[i]);
-			}
-			PlayerPrefs.Save ();
-			Debug.Log("SAVE");
-		}
-	}
-
-	public void insertHighScore(float[] highscore, int insertAt, int score)
-    {
-		
-		//Debug.Log("INSERT " + score + " AT " + (insertAt+1));
-
-        for (int i = highscore.Length-1; i >= insertAt; i--)
-        {
-            highscore[i] = highscore[i - 1];
-			//Debug.Log("EDITING " + i);
-        }
-
-        highscore[insertAt] = score;
-    }
+    
 }
 

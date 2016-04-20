@@ -13,81 +13,81 @@ public class Laser : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-        if ((!player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) // if nothing is pressed or just left and right are pressed
+        if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
         {
-            direction = player.GetDirection();
+            direction = player.Direction;
         }
-        else if (player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) // shoot left
+        else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
         {
             direction = -1;
         }
-        else if (!player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp()) //shoot right
+        else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
         {
             direction = 1;
         }
-        else if ((!player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) //shoot up
+        else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
         {
             direction = 0;
         }
-        else if (player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) //shoot left-up    for some reason this some how doesn't work.
+        else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
         {
             direction = -1;
             diagonal = true;
         }
-        else if (!player.GetShootLeft() && player.GetShootRight() && player.GetShootUp()) //shoot right-up
+        else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
         {
             direction = 1;
             diagonal = true;
         }
         else
         {
-            direction = player.GetDirection();
+            direction = player.Direction;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!player.GetLaser())
+        if (!player.Laser)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            if ((!player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) // if nothing is pressed or just left and right are pressed
+            if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
             {
-                direction = player.GetDirection();
+                direction = player.Direction;
                 diagonal = false;
             }
-            else if (player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) // shoot left
+            else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
             {
                 diagonal = false;
                 direction = -1;
             }
-            else if (!player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp()) //shoot right
+            else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
             {
                 diagonal = false;
                 direction = 1;
             }
-            else if ((!player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) //shoot up
+            else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
             {
                 diagonal = false;
                 direction = 0;
             }
-            else if (player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) //shoot left-up    for some reason this some how doesn't work.
+            else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
             {
                 direction = -1;
                 diagonal = true;
             }
-            else if (!player.GetShootLeft() && player.GetShootRight() && player.GetShootUp()) //shoot right-up
+            else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
             {
-                direction = 1;
+				direction = 1;
                 diagonal = true;
             }
             else
             {
                 diagonal = false;
-                direction = player.GetDirection();
+                direction = player.Direction;
             }
 
             float distance = 14.0f;

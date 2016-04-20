@@ -12,35 +12,35 @@ public class Bullet : MonoBehaviour
     {
         float diagonalSpeed = speed / (Mathf.Sqrt(2));
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        if ((!player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) // if nothing is pressed or just left and right are pressed
+        if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
         {
-            xSpeed = speed * (float)player.GetDirection();
+            xSpeed = speed * (float)player.Direction;
         }
-        else if (player.GetShootLeft() && !player.GetShootRight() && !player.GetShootUp()) // shoot left
+        else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
         {
             xSpeed -= speed;
         }
-        else if (!player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp()) //shoot right
+        else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
         {
             xSpeed = speed;
         }
-        else if ((!player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) || (player.GetShootLeft() && player.GetShootRight() && !player.GetShootUp())) //shoot up
+        else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
         {
             ySpeed = speed;
         }
-        else if (player.GetShootLeft() && !player.GetShootRight() && player.GetShootUp()) //shoot left-up    for some reason this some how doesn't work.
+        else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
         {
             xSpeed -= diagonalSpeed;
             ySpeed = diagonalSpeed;
         }
-        else if (!player.GetShootLeft() && player.GetShootRight() && player.GetShootUp()) //shoot right-up
+        else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
         {
             xSpeed = diagonalSpeed;
             ySpeed = diagonalSpeed;
         }
         else
         {
-            xSpeed = speed * (float)player.GetDirection();
+            xSpeed = speed * (float)player.Direction;
         }
     }
 
