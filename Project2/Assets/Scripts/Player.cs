@@ -356,7 +356,7 @@ public class Player : MonoBehaviour
         GameObject.Find("btnBack").GetComponent<SpriteRenderer>().enabled = true;
         GameObject.Find("btnBack").GetComponent<BoxCollider2D>().enabled = true;
 
-        int score = ui.GetComponent<UI>().getScore();
+		int score = ui.GetComponent<UI>().getScore();
 
         // Load current scores
         float[] highscore = new float[HighScoreManager.AMT_SAVED];
@@ -364,6 +364,7 @@ public class Player : MonoBehaviour
 			highscore[i] = PlayerPrefs.GetFloat ("Score " + i);
 		}
 
+		// Check
         bool gotHighScore = false;
         int atLoc = highscore.Length;
 		for (int i = 0; i<highscore.Length; i++) {
@@ -388,11 +389,15 @@ public class Player : MonoBehaviour
 
 	public void insertHighScore(float[] highscore, int insertAt, int score)
     {
-        for (int i = highscore.Length; i < insertAt; i--)
+		
+		//Debug.Log("INSERT " + score + " AT " + (insertAt+1));
+
+        for (int i = highscore.Length-1; i >= insertAt; i--)
         {
             highscore[i] = highscore[i - 1];
-            Debug.Log(i + " is replaced by " + (i - 1));
+			//Debug.Log("EDITING " + i);
         }
+
         highscore[insertAt] = score;
     }
 }
