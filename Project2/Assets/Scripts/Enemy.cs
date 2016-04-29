@@ -53,7 +53,8 @@ public class Enemy : MonoBehaviour {
         {
             if (laserCounter == 0.5f)
 			{
-				health.takeDamage(0.05f);
+                float dist = Vector3.Distance(transform.position, player.transform.position)/19.0f;
+				health.takeDamage(0.1f - (0.1f * dist));
                 laserCounter = 0.0f;
             }
             else
