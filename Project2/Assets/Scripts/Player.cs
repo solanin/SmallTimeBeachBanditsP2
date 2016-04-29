@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     Rigidbody rigidBody;
     bool isJumping;
     bool restRightStick = true;
+    bool restRightTrigger = true;
 
     int direction = 1;
     public int Direction { get { return direction; } }
@@ -102,7 +103,7 @@ public class Player : MonoBehaviour
                 Physics.IgnoreLayerCollision(8, 12, true);
             }
 
-            if (XCI.GetButtonDown(XboxButton.RightBumper) || XCI.GetAxis(XboxAxis.RightTrigger) > 0.5)
+            if (XCI.GetButtonDown(XboxButton.RightBumper))
             {
                 if (laser) { laser = false; }
                 currentWeapon++;
@@ -113,7 +114,7 @@ public class Player : MonoBehaviour
                 gm.UpdateUI(currentWeapon, bullets);
             }
 
-            if (XCI.GetButtonDown(XboxButton.LeftBumper) || XCI.GetAxis(XboxAxis.LeftTrigger) > 0.5)
+            if (XCI.GetButtonDown(XboxButton.LeftBumper))
             {
                 if (laser) { laser = false; }
                 currentWeapon--;
@@ -129,12 +130,9 @@ public class Player : MonoBehaviour
                 shootX = XCI.GetAxis(XboxAxis.RightStickX);
                 shootY = XCI.GetAxis(XboxAxis.RightStickY);
                 fireBullet();
-                if (restRightStick)
-                {
-                    fireShots();
-                    restRightStick = false;
-                }
+                restRightStick = false;
             }
+            
             if (XCI.GetAxis(XboxAxis.RightStickX) < 0.5f && XCI.GetAxis(XboxAxis.RightStickX) > -0.5f && XCI.GetAxis(XboxAxis.RightStickY) < 0.5f && XCI.GetAxis(XboxAxis.RightStickY) > -0.5f)
             {
                 restRightStick = true;
@@ -142,6 +140,20 @@ public class Player : MonoBehaviour
                 shootY = 0.0f;
                 laser = false;
             }
+
+            if (XCI.GetAxis(XboxAxis.RightTrigger) > 0.5)
+            {
+                if (restRightTrigger)
+                {
+                    fireShots();
+                    restRightTrigger = false;
+                }
+            }
+            else
+            {
+                restRightTrigger = true;
+            }
+
 
             //keyboard controls
             if (Input.GetKey(KeyCode.A))
