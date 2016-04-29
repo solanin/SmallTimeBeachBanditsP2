@@ -6,42 +6,36 @@ public class Laser : MonoBehaviour
     private Player player;
     private int direction = 0;
     bool diagonal = false;
-    RaycastHit hit;
+    private Vector2 shootDirection;
+    public float distance = 19.0f;
+    Vector2 angleComparison = new Vector2(1.0f, 0.0f);
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        shootDirection.x = player.ShootX;
+        shootDirection.y = player.ShootY;
+        shootDirection.Normalize();
+        shootDirection *= distance;
 
-        if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
+        if (shootDirection.x == 0.0f)
         {
-            direction = player.Direction;
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y + (shootDirection.y / 2), player.transform.position.z);
+            transform.localScale = new Vector3(0.5f, distance, 0.5f);
         }
-        else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
+        else if (shootDirection.y == 0.0f)
         {
-            direction = -1;
-        }
-        else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
-        {
-            direction = 1;
-        }
-        else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
-        {
-            direction = 0;
-        }
-        else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
-        {
-            direction = -1;
-            diagonal = true;
-        }
-        else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
-        {
-            direction = 1;
-            diagonal = true;
+            transform.position = new Vector3(player.transform.position.x + (shootDirection.x / 2), player.transform.position.y, player.transform.position.z);
+            transform.localScale = new Vector3(distance, 0.5f, 0.5f);
         }
         else
         {
-            direction = player.Direction;
+            transform.position = new Vector3(player.transform.position.x + (shootDirection.x / 2), player.transform.position.y + (shootDirection.y / 2), player.transform.position.z);
+            transform.localScale = new Vector3(distance, 0.5f, 0.5f);
+            float angle = Vector2.Angle(angleComparison, shootDirection);
+            if (shootDirection.y < 0) angle *= -1.0f;
+            transform.Rotate(0.0f, 0.0f, angle);
         }
     }
 
@@ -54,77 +48,31 @@ public class Laser : MonoBehaviour
         }
         else
         {
-            if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
-            {
-                direction = player.Direction;
-                diagonal = false;
-            }
-            else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
-            {
-                diagonal = false;
-                direction = -1;
-            }
-            else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
-            {
-                diagonal = false;
-                direction = 1;
-            }
-            else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
-            {
-                diagonal = false;
-                direction = 0;
-            }
-            else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
-            {
-                direction = -1;
-                diagonal = true;
-            }
-            else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
-            {
-				direction = 1;
-                diagonal = true;
-            }
-            else
-            {
-                diagonal = false;
-                direction = player.Direction;
-            }
-
-            float distance = 14.0f;
             transform.rotation = Quaternion.identity;
-            if (diagonal)
+            shootDirection.x = player.ShootX;
+            shootDirection.y = player.ShootY;
+            shootDirection.Normalize();
+            shootDirection *= distance;
+
+            if (shootDirection.x == 0.0f)
             {
-                distance = 19.0f;
-
-                float xDist = direction * (distance / Mathf.Sqrt(2));
-                transform.position = new Vector3(player.transform.position.x + (xDist / 2), player.transform.position.y + (Mathf.Abs(xDist) / 2), player.transform.position.z);
+                transform.position = new Vector3(player.transform.position.x, player.transform.position.y + (shootDirection.y / 2), player.transform.position.z);
+                transform.localScale = new Vector3(0.5f, distance, 0.5f);
+            }
+            else if (shootDirection.y == 0.0f)
+            {
+                transform.position = new Vector3(player.transform.position.x + (shootDirection.x / 2), player.transform.position.y, player.transform.position.z);
                 transform.localScale = new Vector3(distance, 0.5f, 0.5f);
-
-                if (direction > 0)
-                {
-                    transform.Rotate(0.0f, 0.0f, 45.0f);
-                }
-                else
-                {
-                    transform.Rotate(0.0f, 0.0f, -45.0f);
-                }
-
             }
             else
             {
-                if (direction != 0)
-                {
-                    transform.position = new Vector3(player.transform.position.x + (direction * distance / 2) + (direction * 0.5f), player.transform.position.y, player.transform.position.z);
-                    transform.localScale = new Vector3(distance, 0.5f, 0.5f);
-                }
-                else
-                {
-                    transform.position = new Vector3(player.transform.position.x, player.transform.position.y + (distance / 2), player.transform.position.z);
-
-                    transform.localScale = new Vector3(0.5f, distance, 0.5f);
-                }
+                transform.position = new Vector3(player.transform.position.x + (shootDirection.x / 2), player.transform.position.y + (shootDirection.y / 2), player.transform.position.z);
+                transform.localScale = new Vector3(distance, 0.5f, 0.5f);
+                float angle = Vector2.Angle(angleComparison, shootDirection);
+                if (shootDirection.y < 0) angle *= -1.0f;
+                transform.Rotate(0.0f, 0.0f, angle);
             }
         }
-        
+
     }
 }

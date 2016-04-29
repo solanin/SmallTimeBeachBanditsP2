@@ -7,38 +7,18 @@ public class Bullet : MonoBehaviour
     float xSpeed = 0.0f;
     float ySpeed = 0.0f;
     private Player player;
-    // Use this for initialization
+    private Vector2 shootDirection;
+    
     void Start()
     {
-        float diagonalSpeed = speed / (Mathf.Sqrt(2));
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        if ((!player.ShootLeft && !player.ShootRight && !player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) // if nothing is pressed or just left and right are pressed
-        {
-            xSpeed = speed * (float)player.Direction;
-        }
-        else if (player.ShootLeft && !player.ShootRight && !player.ShootUp) // shoot left
-        {
-            xSpeed -= speed;
-        }
-        else if (!player.ShootLeft && player.ShootRight && !player.ShootUp) //shoot right
-        {
-            xSpeed = speed;
-        }
-        else if ((!player.ShootLeft && !player.ShootRight && player.ShootUp) || (player.ShootLeft && player.ShootRight && !player.ShootUp)) //shoot up
-        {
-            ySpeed = speed;
-        }
-        else if (player.ShootLeft && !player.ShootRight && player.ShootUp) //shoot left-up    for some reason this some how doesn't work.
-        {
-            xSpeed -= diagonalSpeed;
-            ySpeed = diagonalSpeed;
-        }
-        else if (!player.ShootLeft && player.ShootRight && player.ShootUp) //shoot right-up
-        {
-            xSpeed = diagonalSpeed;
-            ySpeed = diagonalSpeed;
-        }
-        else
+        shootDirection.x = player.ShootX;
+        shootDirection.y = player.ShootY;
+        shootDirection.Normalize();
+        xSpeed = shootDirection.x * speed;
+        ySpeed = shootDirection.y * speed;
+
+        if (xSpeed == 0.0f && ySpeed == 0.0f)
         {
             xSpeed = speed * (float)player.Direction;
         }
