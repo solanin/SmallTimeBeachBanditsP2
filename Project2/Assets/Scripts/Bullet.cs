@@ -22,6 +22,7 @@ public class Bullet : MonoBehaviour
         {
             xSpeed = speed * (float)player.Direction;
         }
+        Destroy(this.gameObject, 10.0f);
     }
 
     // Update is called once per frame

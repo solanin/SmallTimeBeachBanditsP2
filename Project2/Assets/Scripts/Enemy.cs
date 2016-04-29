@@ -159,7 +159,6 @@ public class Enemy : MonoBehaviour {
                 Destroy(col.gameObject);
                 break;
             case "Fireball":
-                
                 fireball = true;
                 fireballCount++;
                 break;

@@ -24,14 +24,14 @@ public class Fireball : MonoBehaviour
         {
             xSpeed = speed * (float)player.Direction;
         }
+        Destroy(this.gameObject, life);
     }
 
     // Update is called once per frame
     void Update()
     {
-        life -= Time.deltaTime;
         transform.position = new Vector3(transform.position.x + Time.deltaTime * xSpeed, transform.position.y + Time.deltaTime * ySpeed, transform.position.z);
-        if (life <= 0 || transform.position.x - player.transform.position.x > 14.0 || transform.position.x - player.transform.position.x < -14.0 || transform.position.y - player.transform.position.y > 14.0f)
+        if (transform.position.x - player.transform.position.x > 14.0 || transform.position.x - player.transform.position.x < -14.0 || transform.position.y - player.transform.position.y > 14.0f)
         {
             Destroy(this.gameObject);
         }
