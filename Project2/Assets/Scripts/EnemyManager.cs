@@ -13,32 +13,67 @@ public class EnemyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        score = GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UI>().score;
         for (int i = 0; i < 5; i++)
         {
             GenerateEnemy(i);
         }
-        score = GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UI>().score;
 	}
 
     public void GenerateEnemy(int index)
     {
-        int type = Random.Range(0, 4);
+        int type = Random.Range(0, 20);
+        if (score.text == "15" || 
+            score.text == "30" || 
+            score.text == "50" || 
+            score.text == "70" || 
+            score.text == "100" || 
+            score.text == "135" || 
+            score.text == "175" || 
+            score.text == "220" || 
+            score.text == "270" || 
+            score.text == "350")
+        {
+            type = 20;
+            score.text += ".";
+        }
         int pos = Random.Range(0, 2);
         GameObject enemy;
         string name = "";
         switch (type)
         {
             case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
                 name = "Prefabs\\EnemySlow";
                 break;
-            case 1:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
                 name = "Prefabs\\EnemyFast";
                 break;
-            case 2:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
                 name = "Prefabs\\EnemyNorm";
                 break;
-            case 3:
+            case 15:
+            case 16:
+            case 17:
+            case 14:
                 name = "Prefabs\\EnemyJump";
+                break;
+            case 18:
+            case 19:
+                name = "Prefabs\\EnemyObstacle";
+                break;
+            case 20:
+                name = "Prefabs\\EnemyBoss";
                 break;
         }
         enemy = (GameObject)Resources.Load(name);
@@ -84,6 +119,7 @@ public class EnemyManager : MonoBehaviour {
             case "15":
                 totalAllowedEnemies = 6;
                 changeArray = true;
+
                 break;
             case "30":
                 totalAllowedEnemies = 7;
