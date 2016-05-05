@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour {
     public GameObject machineDrop;
     public GameObject fireballDrop;
     public GameObject laserDrop;
+    public GameObject shotgunDrop;
+    public GameObject sniperDrop;
+    public GameObject grenadeDrop;
 
     // Use this for initialization
     void Start () {
@@ -115,7 +118,7 @@ public class Enemy : MonoBehaviour {
 
 		if (health.isDead())
         {
-            int drop = Random.Range(0, 20);
+            int drop = Random.Range(0, 26);
 
             if ( drop < 12)
             {
@@ -136,10 +139,25 @@ public class Enemy : MonoBehaviour {
                 //drop fire ball
                 Instantiate(fireballDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
             }
-            else if (drop == 19)
+            else if (drop < 21)
             {
                 //drop laser
                 Instantiate(laserDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop < 23)
+            {
+                //drop sniper
+                Instantiate(sniperDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop < 25)
+            {
+                //drop shotgun
+                Instantiate(shotgunDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+            }
+            else if (drop == 25)
+            {
+                //drop grenade
+                Instantiate(grenadeDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
             }
 
             Destroy(self);
@@ -159,14 +177,13 @@ public class Enemy : MonoBehaviour {
                 Destroy(col.gameObject);
                 break;
             case "SnipeBullet":
-                health.takeDamage(1.0f);
+                health.takeDamage(1.5f);
                 Destroy(col.gameObject);
                 break;
             case "ShotBullet":
                 float dist = Vector3.Distance(transform.position, player.transform.position) / 19.0f;
                 health.takeDamage(0.7f - (0.7f * dist));
                 Destroy(col.gameObject);
-
                 break;
             case "Fireball":
                 fireball = true;
@@ -209,6 +226,10 @@ public class Enemy : MonoBehaviour {
         else if (col.gameObject.tag == "Laser")
         {
             laser = true;
+        }
+        else if (col.gameObject.tag == "Explosion")
+        {
+            health.takeDamage(1.0f);
         }
     }
     void OnTriggerExit(Collider col)

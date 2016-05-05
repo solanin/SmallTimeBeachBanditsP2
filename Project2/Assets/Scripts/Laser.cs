@@ -4,8 +4,6 @@ using System.Collections;
 public class Laser : MonoBehaviour
 {
     private Player player;
-    private int direction = 0;
-    bool diagonal = false;
     private Vector2 shootDirection;
     public float distance = 19.0f;
     Vector2 angleComparison = new Vector2(1.0f, 0.0f);

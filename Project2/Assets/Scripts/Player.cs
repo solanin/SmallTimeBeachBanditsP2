@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private GameManager gm;
 
     //list of bullets remaining (pistol, machine gun, fireball, laser in sec, sniper, shot gun, granade)
-    float[] bullets = new float[7] { -1.0f, 200.0f, 10.0f, 10.0f, 3, 20, 5 };
+    float[] bullets = new float[7] { -1.0f, 200.0f, 10.0f, 10.0f, 4.0f, 25.0f, 10.0f };
 
     //index of currently equipped weapon
     int currentWeapon = 0;
@@ -327,7 +327,12 @@ public class Player : MonoBehaviour
                 }
                 break;
             case 6:
-
+                if (bullets[currentWeapon] > 0)
+                {
+                    Instantiate(grenadePrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    bullets[currentWeapon] -= 1;
+                    gm.UpdateAmo(bullets[currentWeapon]);
+                }
                 break;
             default:
                 break;
@@ -355,47 +360,71 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
+        switch (col.gameObject.tag)
         {
-            immune = true;
-            health.takeDamage(5.0f);
-            if (health.isDead())
-            {
-                gm.EndGame();
-            }
-        }
-        else if (col.gameObject.tag == "HealthDrop")
-        {
-            health.gainHealth(10.0f);
-            Destroy(col.gameObject);
-        }
-        else if (col.gameObject.tag == "MachineDrop")
-        {
-            bullets[1] += 100.0f;
-            if (bullets[1] > 200.0f)
-                bullets[1] = 200.0f;
-            if (currentWeapon == 1)
-                gm.UpdateAmo(bullets[1]);
-
-            Destroy(col.gameObject);
-        }
-        else if (col.gameObject.tag == "LaserDrop")
-        {
-            bullets[2] += 5.0f;
-            if (bullets[2] > 10.0f)
-                bullets[2] = 10.0f;
-            if (currentWeapon == 2)
-                gm.UpdateAmo(bullets[2]);
-            Destroy(col.gameObject);
-        }
-        else if (col.gameObject.tag == "FireballDrop")
-        {
-            bullets[3] += 5.0f;
-            if (bullets[3] > 10.0f)
-                bullets[3] = 10.0f;
-            if (currentWeapon == 3)
-                gm.UpdateAmo(bullets[3]);
-            Destroy(col.gameObject);
+            case "Enemy":
+                if (!immune && !health.isDead())
+                {
+                    immune = true;
+                    health.takeDamage(5.0f);
+                    if (health.isDead())
+                    {
+                        gm.EndGame();
+                    }
+                }
+                break;
+            case "HealthDrop":
+                health.gainHealth(10.0f);
+                Destroy(col.gameObject);
+                break;
+            case "MachineDrop":
+                bullets[1] += 100.0f;
+                if (bullets[1] > 200.0f)
+                    bullets[1] = 200.0f;
+                if (currentWeapon == 1)
+                    gm.UpdateAmo(bullets[1]);
+                Destroy(col.gameObject);
+                break;
+            case "FireballDrop":
+                bullets[2] += 5.0f;
+                if (bullets[2] > 10.0f)
+                    bullets[2] = 10.0f;
+                if (currentWeapon == 2)
+                    gm.UpdateAmo(bullets[2]);
+                Destroy(col.gameObject);
+                break;
+            case "LaserDrop":
+                bullets[3] += 5.0f;
+                if (bullets[3] > 10.0f)
+                    bullets[3] = 10.0f;
+                if (currentWeapon == 3)
+                    gm.UpdateAmo(bullets[3]);
+                Destroy(col.gameObject);
+                break;
+            case "SniperDrop":
+                bullets[4] += 2.0f;
+                if (bullets[4] > 4.0f)
+                    bullets[4] = 4.0f;
+                if (currentWeapon == 4)
+                    gm.UpdateAmo(bullets[4]);
+                Destroy(col.gameObject);
+                break;
+            case "ShotgunDrop":
+                bullets[5] += 15.0f;
+                if (bullets[5] > 25.0f)
+                    bullets[5] = 25.0f;
+                if (currentWeapon == 5)
+                    gm.UpdateAmo(bullets[5]);
+                Destroy(col.gameObject);
+                break;
+            case "GrenadeDrop":
+                bullets[6] += 3.0f;
+                if (bullets[6] > 5.0f) 
+                    bullets[6] = 5.0f;
+                if (currentWeapon == 6)
+                    gm.UpdateAmo(bullets[6]);
+                Destroy(col.gameObject);
+                break;
         }
 
     }

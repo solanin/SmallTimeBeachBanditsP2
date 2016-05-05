@@ -17,6 +17,10 @@ TagManager:
   - Platform
   - SnipeBullet
   - ShotBullet
+  - Explosion
+  - GrenadeDrop
+  - SniperDrop
+  - ShotgunDrop
   layers:
   - Default
   - TransparentFX
