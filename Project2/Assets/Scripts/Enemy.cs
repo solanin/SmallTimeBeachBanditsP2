@@ -155,9 +155,18 @@ public class Enemy : MonoBehaviour {
         switch (col.gameObject.tag)
         {
             case "Bullet":
-                GameObject.Destroy(col.gameObject);
 				health.takeDamage(0.3f);
                 Destroy(col.gameObject);
+                break;
+            case "SnipeBullet":
+                health.takeDamage(1.0f);
+                Destroy(col.gameObject);
+                break;
+            case "ShotBullet":
+                float dist = Vector3.Distance(transform.position, player.transform.position) / 19.0f;
+                health.takeDamage(0.7f - (0.7f * dist));
+                Destroy(col.gameObject);
+
                 break;
             case "Fireball":
                 fireball = true;

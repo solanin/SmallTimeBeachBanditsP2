@@ -14,7 +14,7 @@ public class ShopManager : MonoBehaviour {
 			val[i] = 0;
 			dmgLabels [i].text = "Dmg: "+i;
 		}
-		LoadValues (val);
+		//LoadValues (val);
 		UpdateLabels (val);
 	}
 	

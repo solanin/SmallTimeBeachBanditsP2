@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
 
     int direction = 1;
     public int Direction { get { return direction; } }
-
     private float shootX = 0.0f;
     public float ShootX { get { return shootX; } }
     private float shootY = 0.0f;
@@ -22,8 +21,8 @@ public class Player : MonoBehaviour
     private Health health;
     private GameManager gm;
 
-    //list of bullets remaining
-    float[] bullets = new float[4] { -1.0f, 200.0f, 10.0f, 10.0f };
+    //list of bullets remaining (pistol, machine gun, fireball, laser in sec, sniper, shot gun, granade)
+    float[] bullets = new float[7] { -1.0f, 200.0f, 10.0f, 10.0f, 3, 20, 5 };
 
     //index of currently equipped weapon
     int currentWeapon = 0;
@@ -32,13 +31,12 @@ public class Player : MonoBehaviour
     public GameObject machineGunBulletPrefab = null;
     public GameObject laserPrefab = null;
     public GameObject fireballPrefab = null;
-
-    public int fireballDamage = 10;
-    public int pistolDamage = 2;
-    public int machineGunDamage = 2;
-    public int laserDamage = 10;
+    public GameObject sniperBulletPrefab = null;
+    public GameObject shotGunPrefab = null;
+    public GameObject grenadePrefab = null;
 
     float bulletCool = 0.15f;
+    float sniperCool = 0.5f;
     bool laser = false;
     public bool Laser { get { return laser; } }
 
@@ -62,6 +60,7 @@ public class Player : MonoBehaviour
     {
 
         if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
+        if (sniperCool < 0.5f) sniperCool += Time.deltaTime;
         if (immune)
         {
             playerFlashTime -= Time.deltaTime;
@@ -95,7 +94,7 @@ public class Player : MonoBehaviour
                     direction = -1;
                 }
             }
-            if ((XCI.GetAxis(XboxAxis.LeftStickY) > 0.4f) && !isJumping)
+            if ((XCI.GetAxis(XboxAxis.LeftStickY) > 0.5f) && !isJumping)
             {
                 isJumping = true;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
@@ -107,7 +106,7 @@ public class Player : MonoBehaviour
             {
                 if (laser) { laser = false; }
                 currentWeapon++;
-                if (currentWeapon > 3)
+                if (currentWeapon > 6)
                 {
                     currentWeapon = 0;
                 }
@@ -120,7 +119,7 @@ public class Player : MonoBehaviour
                 currentWeapon--;
                 if (currentWeapon < 0)
                 {
-                    currentWeapon = 3;
+                    currentWeapon = 6;
                 }
                 gm.UpdateUI(currentWeapon, bullets);
             }
@@ -153,8 +152,7 @@ public class Player : MonoBehaviour
             {
                 restRightTrigger = true;
             }
-
-
+            
             //keyboard controls
             if (Input.GetKey(KeyCode.A))
             {
@@ -178,7 +176,7 @@ public class Player : MonoBehaviour
             {
                 if (laser) { laser = false; }
                 currentWeapon++;
-                if (currentWeapon > 3)
+                if (currentWeapon > 6)
                 {
                     currentWeapon = 0;
                 }
@@ -190,7 +188,7 @@ public class Player : MonoBehaviour
                 currentWeapon--;
                 if (currentWeapon < 0)
                 {
-                    currentWeapon = 3;
+                    currentWeapon = 6;
                 }
                 gm.UpdateUI(currentWeapon, bullets);
             }
@@ -241,13 +239,13 @@ public class Player : MonoBehaviour
         //laser ammo check
         if (laser)
         {
-            bullets[2] -= Time.deltaTime;
-            if (bullets[2] <= 0.0f)
+            bullets[3] -= Time.deltaTime;
+            if (bullets[3] <= 0.0f)
             {
                 laser = false;
-                bullets[2] = 0.0f;
+                bullets[3] = 0.0f;
             }
-            gm.UpdateAmo(bullets[2]);
+            gm.UpdateAmo(bullets[3]);
         }
 
         if (isJumping)
@@ -277,20 +275,20 @@ public class Player : MonoBehaviour
             default:
                 break;
             case 1:
-                if (bulletCool >= 0.15f && bullets[1] > 0)
+                if (bulletCool >= 0.15f && bullets[currentWeapon] > 0)
                 {
                     Instantiate(machineGunBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     bulletCool = 0.0f;
-                    bullets[1] -= 4;
-                    gm.UpdateAmo(bullets[1]);
+                    bullets[currentWeapon] -= 4;
+                    gm.UpdateAmo(bullets[currentWeapon]);
                 }
                 break;
-            case 2:
-                if (!laser && bullets[2] > 0.0f)
+            case 3:
+                if (!laser && bullets[currentWeapon] > 0.0f)
                 {
                     Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y, 0.5f), Quaternion.identity);
                     laser = true;
-                    gm.UpdateAmo(bullets[2]);
+                    gm.UpdateAmo(bullets[currentWeapon]);
                 }
                 break;
         }
@@ -304,15 +302,32 @@ public class Player : MonoBehaviour
                 Instantiate(pistolBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                 break;
             case 2:
-                laser = false;
-                break;
-            case 3:
-                if (bullets[3] > 0)
+                if (bullets[currentWeapon] > 0)
                 {
                     Instantiate(fireballPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-                    bullets[3] -= 1;
-                    gm.UpdateAmo(bullets[3]);
+                    bullets[currentWeapon] -= 1;
+                    gm.UpdateAmo(bullets[currentWeapon]);
                 }
+                break;
+            case 4:
+                if (bullets[currentWeapon] > 0 && sniperCool >= 0.5f)
+                {
+                    Instantiate(sniperBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    sniperCool = 0.0f;
+                    bullets[currentWeapon] -= 1;
+                    gm.UpdateAmo(bullets[currentWeapon]);
+                }
+                break;
+            case 5:
+                if (bullets[currentWeapon] > 0)
+                {
+                    Instantiate(shotGunPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    bullets[currentWeapon] -= 5;
+                    gm.UpdateAmo(bullets[currentWeapon]);
+                }
+                break;
+            case 6:
+
                 break;
             default:
                 break;

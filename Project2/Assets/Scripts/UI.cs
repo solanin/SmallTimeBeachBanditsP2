@@ -39,12 +39,22 @@ public class UI : MonoBehaviour {
 				name = "machine";
 				break;
 			case 2:
-				name = "laser";
-				break;
-			case 3:
 				name = "fire";
 				break;
-		}
+			case 3:
+				name = "laser";
+				break;
+            case 4:
+                name = "sniper";
+                break;
+            case 5:
+                name = "shotgun";
+                break;
+            case 6:
+                name = "grenade";
+                break;
+
+        }
 		weapon.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/"+name);
 	}
 

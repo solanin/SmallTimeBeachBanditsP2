@@ -1093,6 +1093,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: machineGunBulletPrefab
+      value: 
+      objectReference: {fileID: 155210, guid: 70a914f2e960c62499a68a16fa48c2d4, type: 2}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: laserPrefab
+      value: 
+      objectReference: {fileID: 164148, guid: 697063fe4ccf77346b936d0865f62f57, type: 2}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: fireballPrefab
+      value: 
+      objectReference: {fileID: 127412, guid: f3169039a841793488b1acb31d320949, type: 2}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: pistolBulletPrefab
+      value: 
+      objectReference: {fileID: 117356, guid: 16d387a71b744c84ca23991c9388f501, type: 2}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: sniperBulletPrefab
+      value: 
+      objectReference: {fileID: 117356, guid: d28092e2660314f4cb328b12f55e683e, type: 2}
+    - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
+      propertyPath: shotGunPrefab
+      value: 
+      objectReference: {fileID: 117766, guid: fcbc145651ab4b24c8676b165a2f8f40, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
   m_IsPrefabParent: 0
