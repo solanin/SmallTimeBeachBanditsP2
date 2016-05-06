@@ -14,6 +14,14 @@ public class EnemyManager : MonoBehaviour {
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         score = GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UI>().score;
+        Physics.IgnoreLayerCollision(9, 13, true);
+        Physics.IgnoreLayerCollision(11, 13, true);
+        Physics.IgnoreLayerCollision(12, 13, true);
+        Physics.IgnoreLayerCollision(14, 13, true);
+        Physics.IgnoreLayerCollision(9, 14, true);
+        Physics.IgnoreLayerCollision(9, 9, true);
+        Physics.IgnoreLayerCollision(11, 14, true);
+        Physics.IgnoreLayerCollision(12, 14, true);
         for (int i = 0; i < 5; i++)
         {
             GenerateEnemy(i);
@@ -23,16 +31,16 @@ public class EnemyManager : MonoBehaviour {
     public void GenerateEnemy(int index)
     {
         int type = Random.Range(0, 20);
-        if (score.text == "15" || 
-            score.text == "30" || 
+        if (score.text == "25" || 
             score.text == "50" || 
-            score.text == "70" || 
+            score.text == "75" || 
             score.text == "100" || 
-            score.text == "135" || 
-            score.text == "175" || 
-            score.text == "220" || 
-            score.text == "270" || 
-            score.text == "350")
+            score.text == "150" || 
+            score.text == "200" || 
+            score.text == "250" || 
+            score.text == "300" || 
+            score.text == "400" || 
+            score.text == "500")
         {
             type = 20;
             score.text += ".";
@@ -86,6 +94,10 @@ public class EnemyManager : MonoBehaviour {
                 enemy.transform.position = new Vector2(player.transform.position.x + 15.0f,-0.5f);
                 break;
         }
+        if (type == 20)
+        {
+            enemy.transform.position += new Vector3(0.0f, 3.0f);
+        }
         enemy.GetComponent<Enemy>().index = index;
         Instantiate(enemy);
         enemies[index] = enemy;
@@ -116,45 +128,44 @@ public class EnemyManager : MonoBehaviour {
                 totalAllowedEnemies = 5;
                 changeArray = true;
                 break;
-            case "15":
+            case "25":
                 totalAllowedEnemies = 6;
-                changeArray = true;
-
-                break;
-            case "30":
-                totalAllowedEnemies = 7;
                 changeArray = true;
                 break;
             case "50":
-                totalAllowedEnemies = 8;
+                totalAllowedEnemies = 7;
                 changeArray = true;
                 break;
-            case "70":
-                totalAllowedEnemies = 9;
+            case "75":
+                totalAllowedEnemies = 8;
                 changeArray = true;
                 break;
             case "100":
                 totalAllowedEnemies = 10;
                 changeArray = true;
                 break;
-            case "135":
-                totalAllowedEnemies = 11;
-                changeArray = true;
-                break;
-            case "175":
+            case "150":
                 totalAllowedEnemies = 12;
                 changeArray = true;
                 break;
-            case "220":
-                totalAllowedEnemies = 13;
-                changeArray = true;
-                break;
-            case "270":
+            case "200":
                 totalAllowedEnemies = 14;
                 changeArray = true;
                 break;
-            case "350":
-                totalAllowedEnemies = 15;
+            case "250":
+                totalAllowedEnemies = 16;
+                changeArray = true;
+                break;
+            case "300":
+                totalAllowedEnemies = 18;
+                changeArray = true;
+                break;
+            case "400":
+                totalAllowedEnemies = 20;
+                changeArray = true;
+                break;
+            case "500":
+                totalAllowedEnemies = 25;
                 changeArray = true;
                 break;
         }

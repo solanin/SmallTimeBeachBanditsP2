@@ -89,13 +89,14 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
-        if (jumper && canJump && player.transform.position.y - self.transform.position.y >= 0.1F)
+        if (jumper && canJump && player.transform.position.y - self.transform.position.y >= 0.1F && Mathf.Abs(player.transform.position.x - self.transform.position.x) < 5.0f)
         {
             body.velocity = new Vector3(body.velocity.x, 30.0f);
             canJump = false;
 
             Physics.IgnoreLayerCollision(9, 12, true);
         }
+
 
         if (!canJump)
         {
@@ -118,48 +119,55 @@ public class Enemy : MonoBehaviour {
 
 		if (health.isDead())
         {
-            int drop = Random.Range(0, 26);
+            int x = 1;
+            if(self.layer == 13)
+            {
+                x = 13;
+            }
+            for (int i = 0; i < x; i++)
+            {
+                int drop = Random.Range(0, 26);
 
-            if ( drop < 12)
-            {
-                //drop nothing
+                if (drop < 12)
+                {
+                    //drop nothing
+                }
+                else if (drop < 15)
+                {
+                    // drop health
+                    Instantiate(healthDrop, new Vector3(transform.position.x, transform.position.y + .1f), Quaternion.identity);
+                }
+                else if (drop < 17)
+                {
+                    //drop machine gun
+                    Instantiate(machineDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                }
+                else if (drop < 19)
+                {
+                    //drop fire ball
+                    Instantiate(fireballDrop, new Vector3(transform.position.x + .1f, transform.position.y), Quaternion.identity);
+                }
+                else if (drop < 21)
+                {
+                    //drop laser
+                    Instantiate(laserDrop, new Vector3(transform.position.x - .1f, transform.position.y - .1f), Quaternion.identity);
+                }
+                else if (drop < 23)
+                {
+                    //drop sniper
+                    Instantiate(sniperDrop, new Vector3(transform.position.x + .1f, transform.position.y + .1f), Quaternion.identity);
+                }
+                else if (drop < 25)
+                {
+                    //drop shotgun
+                    Instantiate(shotgunDrop, new Vector3(transform.position.x, transform.position.y - .1f), Quaternion.identity);
+                }
+                else if (drop == 25)
+                {
+                    //drop grenade
+                    Instantiate(grenadeDrop, new Vector3(transform.position.x - .1f, transform.position.y), Quaternion.identity);
+                }
             }
-            else if (drop < 15)
-            {
-                // drop health
-                Instantiate(healthDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop < 17)
-            {
-                //drop machine gun
-                Instantiate(machineDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop < 19)
-            {
-                //drop fire ball
-                Instantiate(fireballDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop < 21)
-            {
-                //drop laser
-                Instantiate(laserDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop < 23)
-            {
-                //drop sniper
-                Instantiate(sniperDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop < 25)
-            {
-                //drop shotgun
-                Instantiate(shotgunDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-            else if (drop == 25)
-            {
-                //drop grenade
-                Instantiate(grenadeDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-            }
-
             Destroy(self);
             alive = false;
 			em.GenerateEnemy(index);

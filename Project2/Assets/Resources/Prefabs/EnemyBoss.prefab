@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11480002}
   - 114: {fileID: 11432114}
   - 75: {fileID: 7590636}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: EnemyBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 33: {fileID: 3391294}
   - 65: {fileID: 6543010}
   - 23: {fileID: 2316528}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.693751, y: -0.5, z: 0}
+  m_LocalPosition: {x: 21.90402, y: 2.5, z: 0}
   m_LocalScale: {x: 4, y: 8, z: 4}
   m_Children:
   - {fileID: 495602}
@@ -144,7 +144,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 124
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!65 &6523346
 BoxCollider:
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 495602}
   BAR_WIDTH_MAX: 1.5
-  MAX_HEALTH: 20
+  MAX_HEALTH: 50
 --- !u!114 &11480002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,10 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e3f2efd010fc440b962385d9743654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 35
   damage: 1
   alive: 0
-  index: 1
+  index: 2
   jumper: 0
   healthDrop: {fileID: 145012, guid: f3a3036f263844f4e86b9512d4b1b43b, type: 2}
   machineDrop: {fileID: 113748, guid: e6b0d7b9e7b4a7147957f53772562313, type: 2}
@@ -241,6 +241,22 @@ Prefab:
       propertyPath: grenadeDrop
       value: 
       objectReference: {fileID: 113748, guid: 66a676db60fe3e94a973eabaee3d15fa, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MAX_HEALTH
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102512}
