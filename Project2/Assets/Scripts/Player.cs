@@ -36,7 +36,10 @@ public class Player : MonoBehaviour
     public GameObject grenadePrefab = null;
 
     float bulletCool = 0.15f;
-    float sniperCool = 0.5f;
+    float sniperCool = 1.5f;
+    float shotgunCool = 1.5f;
+    float fireballCool = 1.0f;
+
     bool laser = false;
     public bool Laser { get { return laser; } }
 
@@ -59,26 +62,29 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
-        if (sniperCool < 0.5f) sniperCool += Time.deltaTime;
-        if (immune)
-        {
-            playerFlashTime -= Time.deltaTime;
-            Flash();
-            if (playerFlashTime <= 0.0f)
-            {
-                immune = false;
-                playerFlashTime = 1.0f;
-                flashTimer = 0.1f;
-                GetComponentInChildren<MeshRenderer>().enabled = true;
-                visible = true;
-            }
-        }
+        transform.GetChild(0).transform.position = new Vector3(self.transform.position.x, self.transform.position.y + 1.25f, -5.0f);
 
         if (!health.isDead())
         {
+            if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
+            if (sniperCool < 0.5f) sniperCool += Time.deltaTime;
+            if (immune)
+            {
+                playerFlashTime -= Time.deltaTime;
+                Flash();
+                if (playerFlashTime <= 0.0f)
+                {
+                    immune = false;
+                    playerFlashTime = 1.0f;
+                    flashTimer = 0.1f;
+                    GetComponentInChildren<MeshRenderer>().enabled = true;
+                    visible = true;
+                }
+            }
+
             shootX = 0.0f;
             shootY = 0.0f;
+
 
             // XBox Controller Inputs
             if (XCI.GetAxis(XboxAxis.LeftStickX) != 0.0f)
@@ -172,7 +178,7 @@ public class Player : MonoBehaviour
                 Physics.IgnoreLayerCollision(8, 12, true);
             }
 
-            if (Input.GetKeyUp(KeyCode.R))
+            if (Input.GetKeyUp(KeyCode.E))
             {
                 if (laser) { laser = false; }
                 currentWeapon++;
@@ -182,7 +188,7 @@ public class Player : MonoBehaviour
                 }
                 gm.UpdateUI(currentWeapon, bullets);
             }
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.Q))
             {
                 if (laser) { laser = false; }
                 currentWeapon--;
@@ -194,29 +200,60 @@ public class Player : MonoBehaviour
             }
 
             //shooting direction
-            if (Input.GetKey(KeyCode.I))
+            if (Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.O)|| Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Period))
             {
-                shootY += 1.0f;
+                if (Input.GetKey(KeyCode.U))
+                {
+                    shootX -= 1.0f;
+                    shootY += 1.0f;
+                }
+                if (Input.GetKey(KeyCode.O))
+                {
+                    shootX += 1.0f;
+                    shootY += 1.0f;
+                }
+                if (Input.GetKey(KeyCode.M))
+                {
+                    shootX -= 1.0f;
+                    shootY -= 1.0f;
+                }
+                if (Input.GetKey(KeyCode.Period))
+                {
+                    shootX += 1.0f;
+                    shootY -= 1.0f;
+                }
             }
-            if (Input.GetKey(KeyCode.K))
+            else
             {
-                shootY -= 1.0f;
+                if (Input.GetKey(KeyCode.J))
+                {
+                    shootX -= 1.0f;
+                }
+                else if(Input.GetKey(KeyCode.L))
+                {
+                    shootX += 1.0f;
+                }
+                else if(Input.GetKey(KeyCode.I))
+                {
+                    shootY += 1.0f;
+                }
+                else if(Input.GetKey(KeyCode.K))
+                {
+                    shootY -= 1.0f;
+                }
             }
-            if (Input.GetKey(KeyCode.J))
-            {
-                shootX -= 1.0f;
-            }
-            if (Input.GetKey(KeyCode.L))
-            {
-                shootX += 1.0f;
-            }
+            
 
-            if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.O) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.Period))
+            {
+                fireShots();
+            }
+            else if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
             {
                 fireShots();
             }
 
-            if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K))
+            if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.O) || Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Period))
             {
                 fireBullet();
             }
