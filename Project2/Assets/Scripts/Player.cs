@@ -60,249 +60,206 @@ public class Player : MonoBehaviour
     }
 
     void Update()
-    {
+	{
+		if (!GameManager.isPaused) {
+			transform.GetChild (0).transform.position = new Vector3 (self.transform.position.x, self.transform.position.y + 1.25f, -5.0f);
 
-        transform.GetChild(0).transform.position = new Vector3(self.transform.position.x, self.transform.position.y + 1.25f, -5.0f);
+			if (!health.isDead ()) {
+				if (bulletCool < 0.15f)
+					bulletCool += Time.deltaTime;
+				if (sniperCool < 0.5f)
+					sniperCool += Time.deltaTime;
+				if (immune) {
+					playerFlashTime -= Time.deltaTime;
+					Flash ();
+					if (playerFlashTime <= 0.0f) {
+						immune = false;
+						playerFlashTime = 1.0f;
+						flashTimer = 0.1f;
+						GetComponentInChildren<MeshRenderer> ().enabled = true;
+						visible = true;
+					}
+				}
 
-        if (!health.isDead())
-        {
-            if (bulletCool < 0.15f) bulletCool += Time.deltaTime;
-            if (sniperCool < 0.5f) sniperCool += Time.deltaTime;
-            if (immune)
-            {
-                playerFlashTime -= Time.deltaTime;
-                Flash();
-                if (playerFlashTime <= 0.0f)
-                {
-                    immune = false;
-                    playerFlashTime = 1.0f;
-                    flashTimer = 0.1f;
-                    GetComponentInChildren<MeshRenderer>().enabled = true;
-                    visible = true;
-                }
-            }
-
-            shootX = 0.0f;
-            shootY = 0.0f;
+				shootX = 0.0f;
+				shootY = 0.0f;
 
 
-            // XBox Controller Inputs
-            if (XCI.GetAxis(XboxAxis.LeftStickX) != 0.0f)
-            {
-                rigidBody.velocity = new Vector3(10.0f * XCI.GetAxis(XboxAxis.LeftStickX), rigidBody.velocity.y);
+				// XBox Controller Inputs
+				if (XCI.GetAxis (XboxAxis.LeftStickX) != 0.0f) {
+					rigidBody.velocity = new Vector3 (10.0f * XCI.GetAxis (XboxAxis.LeftStickX), rigidBody.velocity.y);
 
-                if (XCI.GetAxis(XboxAxis.LeftStickX) > 0.0f)
-                {
-                    direction = 1;
-                }
-                else
-                {
-                    direction = -1;
-                }
-            }
-            if ((XCI.GetAxis(XboxAxis.LeftStickY) > 0.5f) && !isJumping)
-            {
-                isJumping = true;
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
+					if (XCI.GetAxis (XboxAxis.LeftStickX) > 0.0f) {
+						direction = 1;
+					} else {
+						direction = -1;
+					}
+				}
+				if ((XCI.GetAxis (XboxAxis.LeftStickY) > 0.5f) && !isJumping) {
+					isJumping = true;
+					rigidBody.velocity = new Vector3 (rigidBody.velocity.x, 60.0f);
 
-                Physics.IgnoreLayerCollision(8, 12, true);
-            }
+					Physics.IgnoreLayerCollision (8, 12, true);
+				}
 
-            if (XCI.GetButtonDown(XboxButton.RightBumper))
-            {
-                if (laser) { laser = false; }
-                currentWeapon++;
-                if (currentWeapon > 6)
-                {
-                    currentWeapon = 0;
-                }
-                gm.UpdateUI(currentWeapon, bullets);
-            }
+				if (XCI.GetButtonDown (XboxButton.RightBumper)) {
+					if (laser) {
+						laser = false;
+					}
+					currentWeapon++;
+					if (currentWeapon > 6) {
+						currentWeapon = 0;
+					}
+					gm.UpdateUI (currentWeapon, bullets);
+				}
 
-            if (XCI.GetButtonDown(XboxButton.LeftBumper))
-            {
-                if (laser) { laser = false; }
-                currentWeapon--;
-                if (currentWeapon < 0)
-                {
-                    currentWeapon = 6;
-                }
-                gm.UpdateUI(currentWeapon, bullets);
-            }
+				if (XCI.GetButtonDown (XboxButton.LeftBumper)) {
+					if (laser) {
+						laser = false;
+					}
+					currentWeapon--;
+					if (currentWeapon < 0) {
+						currentWeapon = 6;
+					}
+					gm.UpdateUI (currentWeapon, bullets);
+				}
 
-            if (XCI.GetAxis(XboxAxis.RightStickX) > 0.5f || XCI.GetAxis(XboxAxis.RightStickX) < -0.5f || XCI.GetAxis(XboxAxis.RightStickY) > 0.5f || XCI.GetAxis(XboxAxis.RightStickY) < -0.5f)
-            {
-                shootX = XCI.GetAxis(XboxAxis.RightStickX);
-                shootY = XCI.GetAxis(XboxAxis.RightStickY);
-                fireBullet();
-                restRightStick = false;
-            }
+				if (XCI.GetAxis (XboxAxis.RightStickX) > 0.5f || XCI.GetAxis (XboxAxis.RightStickX) < -0.5f || XCI.GetAxis (XboxAxis.RightStickY) > 0.5f || XCI.GetAxis (XboxAxis.RightStickY) < -0.5f) {
+					shootX = XCI.GetAxis (XboxAxis.RightStickX);
+					shootY = XCI.GetAxis (XboxAxis.RightStickY);
+					fireBullet ();
+					restRightStick = false;
+				}
             
-            if (XCI.GetAxis(XboxAxis.RightStickX) < 0.5f && XCI.GetAxis(XboxAxis.RightStickX) > -0.5f && XCI.GetAxis(XboxAxis.RightStickY) < 0.5f && XCI.GetAxis(XboxAxis.RightStickY) > -0.5f)
-            {
-                restRightStick = true;
-                shootX = 0.0f;
-                shootY = 0.0f;
-                laser = false;
-            }
+				if (XCI.GetAxis (XboxAxis.RightStickX) < 0.5f && XCI.GetAxis (XboxAxis.RightStickX) > -0.5f && XCI.GetAxis (XboxAxis.RightStickY) < 0.5f && XCI.GetAxis (XboxAxis.RightStickY) > -0.5f) {
+					restRightStick = true;
+					shootX = 0.0f;
+					shootY = 0.0f;
+					laser = false;
+				}
 
-            if (XCI.GetAxis(XboxAxis.RightTrigger) > 0.5)
-            {
-                if (restRightTrigger)
-                {
-                    fireShots();
-                    restRightTrigger = false;
-                }
-            }
-            else
-            {
-                restRightTrigger = true;
-            }
+				if (XCI.GetAxis (XboxAxis.RightTrigger) > 0.5) {
+					if (restRightTrigger) {
+						fireShots ();
+						restRightTrigger = false;
+					}
+				} else {
+					restRightTrigger = true;
+				}
             
-            //keyboard controls
-            if (Input.GetKey(KeyCode.A))
-            {
-                rigidBody.velocity = new Vector3(-10.0f, rigidBody.velocity.y);
-                direction = -1;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                rigidBody.velocity = new Vector3(10.0f, rigidBody.velocity.y);
-                direction = 1;
-            }
-            if (Input.GetKeyDown(KeyCode.W) && !isJumping)
-            {
-                isJumping = true;
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, 60.0f);
+				//keyboard controls
+				if (Input.GetKey (KeyCode.A)) {
+					rigidBody.velocity = new Vector3 (-10.0f, rigidBody.velocity.y);
+					direction = -1;
+				}
+				if (Input.GetKey (KeyCode.D)) {
+					rigidBody.velocity = new Vector3 (10.0f, rigidBody.velocity.y);
+					direction = 1;
+				}
+				if (Input.GetKeyDown (KeyCode.W) && !isJumping) {
+					isJumping = true;
+					rigidBody.velocity = new Vector3 (rigidBody.velocity.x, 60.0f);
 
-                Physics.IgnoreLayerCollision(8, 12, true);
-            }
+					Physics.IgnoreLayerCollision (8, 12, true);
+				}
 
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                if (laser) { laser = false; }
-                currentWeapon++;
-                if (currentWeapon > 6)
-                {
-                    currentWeapon = 0;
-                }
-                gm.UpdateUI(currentWeapon, bullets);
-            }
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                if (laser) { laser = false; }
-                currentWeapon--;
-                if (currentWeapon < 0)
-                {
-                    currentWeapon = 6;
-                }
-                gm.UpdateUI(currentWeapon, bullets);
-            }
+				if (Input.GetKeyUp (KeyCode.E)) {
+					if (laser) {
+						laser = false;
+					}
+					currentWeapon++;
+					if (currentWeapon > 6) {
+						currentWeapon = 0;
+					}
+					gm.UpdateUI (currentWeapon, bullets);
+				}
+				if (Input.GetKeyUp (KeyCode.Q)) {
+					if (laser) {
+						laser = false;
+					}
+					currentWeapon--;
+					if (currentWeapon < 0) {
+						currentWeapon = 6;
+					}
+					gm.UpdateUI (currentWeapon, bullets);
+				}
 
-            //shooting direction
-            if (Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.O)|| Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Period))
-            {
-                if (Input.GetKey(KeyCode.U))
-                {
-                    shootX -= 1.0f;
-                    shootY += 1.0f;
-                }
-                if (Input.GetKey(KeyCode.O))
-                {
-                    shootX += 1.0f;
-                    shootY += 1.0f;
-                }
-                if (Input.GetKey(KeyCode.M))
-                {
-                    shootX -= 1.0f;
-                    shootY -= 1.0f;
-                }
-                if (Input.GetKey(KeyCode.Period))
-                {
-                    shootX += 1.0f;
-                    shootY -= 1.0f;
-                }
-            }
-            else
-            {
-                if (Input.GetKey(KeyCode.J))
-                {
-                    shootX -= 1.0f;
-                }
-                else if(Input.GetKey(KeyCode.L))
-                {
-                    shootX += 1.0f;
-                }
-                else if(Input.GetKey(KeyCode.I))
-                {
-                    shootY += 1.0f;
-                }
-                else if(Input.GetKey(KeyCode.K))
-                {
-                    shootY -= 1.0f;
-                }
-            }
+				//shooting direction
+				if (Input.GetKey (KeyCode.U) || Input.GetKey (KeyCode.O) || Input.GetKey (KeyCode.M) || Input.GetKey (KeyCode.Period)) {
+					if (Input.GetKey (KeyCode.U)) {
+						shootX -= 1.0f;
+						shootY += 1.0f;
+					}
+					if (Input.GetKey (KeyCode.O)) {
+						shootX += 1.0f;
+						shootY += 1.0f;
+					}
+					if (Input.GetKey (KeyCode.M)) {
+						shootX -= 1.0f;
+						shootY -= 1.0f;
+					}
+					if (Input.GetKey (KeyCode.Period)) {
+						shootX += 1.0f;
+						shootY -= 1.0f;
+					}
+				} else {
+					if (Input.GetKey (KeyCode.J)) {
+						shootX -= 1.0f;
+					} else if (Input.GetKey (KeyCode.L)) {
+						shootX += 1.0f;
+					} else if (Input.GetKey (KeyCode.I)) {
+						shootY += 1.0f;
+					} else if (Input.GetKey (KeyCode.K)) {
+						shootY -= 1.0f;
+					}
+				}
             
 
-            if (Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.O) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.Period))
-            {
-                fireShots();
-            }
-            else if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
-            {
-                fireShots();
-            }
+				if (Input.GetKeyDown (KeyCode.U) || Input.GetKeyDown (KeyCode.O) || Input.GetKeyDown (KeyCode.M) || Input.GetKeyDown (KeyCode.Period)) {
+					fireShots ();
+				} else if (Input.GetKeyDown (KeyCode.L) || Input.GetKeyDown (KeyCode.I) || Input.GetKeyDown (KeyCode.J) || Input.GetKeyDown (KeyCode.K)) {
+					fireShots ();
+				}
 
-            if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.O) || Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Period))
-            {
-                fireBullet();
-            }
-            else if (restRightStick)
-            {
-                laser = false;
-            }
-        }
+				if (Input.GetKey (KeyCode.L) || Input.GetKey (KeyCode.I) || Input.GetKey (KeyCode.J) || Input.GetKey (KeyCode.K) || Input.GetKey (KeyCode.U) || Input.GetKey (KeyCode.O) || Input.GetKey (KeyCode.M) || Input.GetKey (KeyCode.Period)) {
+					fireBullet ();
+				} else if (restRightStick) {
+					laser = false;
+				}
+			}
 
-        // Screen Wrap
-        if (transform.position.x > (bg.transform.position.x + 50f))
-        {
-            bg.transform.position = new Vector3(bg.transform.position.x + 100f, bg.transform.position.y, bg.transform.position.z);
-        }
-        else if (transform.position.x < (bg.transform.position.x - 50f))
-        {
-            bg.transform.position = new Vector3(bg.transform.position.x - 100f, bg.transform.position.y, bg.transform.position.z);
-        }
+			// Screen Wrap
+			if (transform.position.x > (bg.transform.position.x + 50f)) {
+				bg.transform.position = new Vector3 (bg.transform.position.x + 100f, bg.transform.position.y, bg.transform.position.z);
+			} else if (transform.position.x < (bg.transform.position.x - 50f)) {
+				bg.transform.position = new Vector3 (bg.transform.position.x - 100f, bg.transform.position.y, bg.transform.position.z);
+			}
 
-        //laser ammo check
-        if (laser)
-        {
-            bullets[3] -= Time.deltaTime;
-            if (bullets[3] <= 0.0f)
-            {
-                laser = false;
-                bullets[3] = 0.0f;
-            }
-            gm.UpdateAmo(bullets[3]);
-        }
+			//laser ammo check
+			if (laser) {
+				bullets [3] -= Time.deltaTime;
+				if (bullets [3] <= 0.0f) {
+					laser = false;
+					bullets [3] = 0.0f;
+				}
+				gm.UpdateAmo (bullets [3]);
+			}
 
-        if (isJumping)
-        {
-            if (rigidBody.velocity.y < 0.0f)
-            {
-                Physics.IgnoreLayerCollision(8, 12, false);
-            }
+			if (isJumping) {
+				if (rigidBody.velocity.y < 0.0f) {
+					Physics.IgnoreLayerCollision (8, 12, false);
+				}
 
-            RaycastHit hit;
+				RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && rigidBody.velocity.y <= 0.0f)
-            {
-                if (hit.distance <= 1.01f)
-                {
-                    isJumping = false;
-                }
-            }
-        }
-    }
+				if (Physics.Raycast (transform.position, -Vector3.up, out hit, 1.2f) && rigidBody.velocity.y <= 0.0f) {
+					if (hit.distance <= 1.01f) {
+						isJumping = false;
+					}
+				}
+			}
+		}
+	}
 
 
     void fireBullet()

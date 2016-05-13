@@ -42,139 +42,106 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 displacement = (player.transform.position - this.transform.position);
-        displacement.y = 0.0f; 
-        body.AddForce((displacement.normalized* speed));
-        if(Mathf.Abs(transform.position.x - player.transform.position.x) > 20.0f)
-        {
-            Destroy(self);
-            alive = false;
-            em.GenerateEnemy(index);
-        }
+		if (!GameManager.isPaused) {
+			Vector3 displacement = (player.transform.position - this.transform.position);
+			displacement.y = 0.0f; 
+			body.AddForce ((displacement.normalized * speed));
+			if (Mathf.Abs (transform.position.x - player.transform.position.x) > 20.0f) {
+				Destroy (self);
+				alive = false;
+				em.GenerateEnemy (index);
+			}
 
-        if (laser)
-        {
-            if (laserCounter == 0.5f)
-			{
-                float dist = Vector3.Distance(transform.position, player.transform.position)/19.0f;
-				health.takeDamage(0.1f - (0.1f * dist));
-                laserCounter = 0.0f;
-            }
-            else
-            {
-                laserCounter -= Time.deltaTime;
-                if (laserCounter <= 0.0f)
-                {
-                    laserCounter = 0.5f;
-                }
-            }
-            if (!player.GetComponent<Player>().Laser)
-            {
-                laser = false;
-            }
-        }
-        if (fireball)
-        {
-            if (fireballCounter == 0.3f)
-			{
-				health.takeDamage(0.1f);
-                fireballCounter = 0.0f;
-            }
-            else
-            {
-                fireballCounter -= Time.deltaTime;
-                if (fireballCounter <= 0.0f)
-                {
-                    fireballCounter = 0.3f;
-                }
-            }
-        }
-        if (jumper && canJump && player.transform.position.y - self.transform.position.y >= 0.1F && Mathf.Abs(player.transform.position.x - self.transform.position.x) < 5.0f)
-        {
-            body.velocity = new Vector3(body.velocity.x, 30.0f);
-            canJump = false;
+			if (laser) {
+				if (laserCounter == 0.5f) {
+					float dist = Vector3.Distance (transform.position, player.transform.position) / 19.0f;
+					health.takeDamage (0.1f - (0.1f * dist));
+					laserCounter = 0.0f;
+				} else {
+					laserCounter -= Time.deltaTime;
+					if (laserCounter <= 0.0f) {
+						laserCounter = 0.5f;
+					}
+				}
+				if (!player.GetComponent<Player> ().Laser) {
+					laser = false;
+				}
+			}
+			if (fireball) {
+				if (fireballCounter == 0.3f) {
+					health.takeDamage (0.1f);
+					fireballCounter = 0.0f;
+				} else {
+					fireballCounter -= Time.deltaTime;
+					if (fireballCounter <= 0.0f) {
+						fireballCounter = 0.3f;
+					}
+				}
+			}
+			if (jumper && canJump && player.transform.position.y - self.transform.position.y >= 0.1F && Mathf.Abs (player.transform.position.x - self.transform.position.x) < 5.0f) {
+				body.velocity = new Vector3 (body.velocity.x, 30.0f);
+				canJump = false;
 
-            Physics.IgnoreLayerCollision(9, 12, true);
-        }
+				Physics.IgnoreLayerCollision (9, 12, true);
+			}
 
 
-        if (!canJump)
-        {
-            if (body.velocity.y < 0.0f)
-            {
-                Physics.IgnoreLayerCollision(9, 12, false);
-            }
+			if (!canJump) {
+				if (body.velocity.y < 0.0f) {
+					Physics.IgnoreLayerCollision (9, 12, false);
+				}
 
 
-            RaycastHit hit;
+				RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.2f) && body.velocity.y <= 0.0f)
-            {
-                if (hit.distance <= 1.01f)
-                {
-                    canJump = true;
-                }
-            }
-        }
+				if (Physics.Raycast (transform.position, -Vector3.up, out hit, 1.2f) && body.velocity.y <= 0.0f) {
+					if (hit.distance <= 1.01f) {
+						canJump = true;
+					}
+				}
+			}
 
-		if (health.isDead())
-        {
-            int x = 1;
-            if(self.layer == 13)
-            {
-                x = 13;
-            }
-            for (int i = 0; i < x; i++)
-            {
-                int drop = Random.Range(0, 26);
+			if (health.isDead ()) {
+				int x = 1;
+				if (self.layer == 13) {
+					x = 13;
+				}
+				for (int i = 0; i < x; i++) {
+					int drop = Random.Range (0, 26);
 
-                if (drop < 12)
-                {
-                    //drop nothing
-                }
-                else if (drop < 15)
-                {
-                    // drop health
-                    Instantiate(healthDrop, new Vector3(transform.position.x, transform.position.y + .1f), Quaternion.identity);
-                }
-                else if (drop < 17)
-                {
-                    //drop machine gun
-                    Instantiate(machineDrop, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
-                }
-                else if (drop < 19)
-                {
-                    //drop fire ball
-                    Instantiate(fireballDrop, new Vector3(transform.position.x + .1f, transform.position.y), Quaternion.identity);
-                }
-                else if (drop < 21)
-                {
-                    //drop laser
-                    Instantiate(laserDrop, new Vector3(transform.position.x - .1f, transform.position.y - .1f), Quaternion.identity);
-                }
-                else if (drop < 23)
-                {
-                    //drop sniper
-                    Instantiate(sniperDrop, new Vector3(transform.position.x + .1f, transform.position.y + .1f), Quaternion.identity);
-                }
-                else if (drop < 25)
-                {
-                    //drop shotgun
-                    Instantiate(shotgunDrop, new Vector3(transform.position.x, transform.position.y - .1f), Quaternion.identity);
-                }
-                else if (drop == 25)
-                {
-                    //drop grenade
-                    Instantiate(grenadeDrop, new Vector3(transform.position.x - .1f, transform.position.y), Quaternion.identity);
-                }
-            }
-            Destroy(self);
-            alive = false;
-			em.GenerateEnemy(index);
-            GameObject.Find("UI").GetComponent<UI>().AddToScore();
-            GameObject.Find("UI").GetComponent<UI>().UpdateScore();
-        }
-    }
+					if (drop < 12) {
+						//drop nothing
+					} else if (drop < 15) {
+						// drop health
+						Instantiate (healthDrop, new Vector3 (transform.position.x, transform.position.y + .1f), Quaternion.identity);
+					} else if (drop < 17) {
+						//drop machine gun
+						Instantiate (machineDrop, new Vector3 (transform.position.x, transform.position.y), Quaternion.identity);
+					} else if (drop < 19) {
+						//drop fire ball
+						Instantiate (fireballDrop, new Vector3 (transform.position.x + .1f, transform.position.y), Quaternion.identity);
+					} else if (drop < 21) {
+						//drop laser
+						Instantiate (laserDrop, new Vector3 (transform.position.x - .1f, transform.position.y - .1f), Quaternion.identity);
+					} else if (drop < 23) {
+						//drop sniper
+						Instantiate (sniperDrop, new Vector3 (transform.position.x + .1f, transform.position.y + .1f), Quaternion.identity);
+					} else if (drop < 25) {
+						//drop shotgun
+						Instantiate (shotgunDrop, new Vector3 (transform.position.x, transform.position.y - .1f), Quaternion.identity);
+					} else if (drop == 25) {
+						//drop grenade
+						Instantiate (grenadeDrop, new Vector3 (transform.position.x - .1f, transform.position.y), Quaternion.identity);
+					}
+				}
+				Destroy (self);
+				alive = false;
+				em.GenerateEnemy (index);
+				GameObject.Find ("UI").GetComponent<UI> ().AddToScore ();
+				GameObject.Find ("UI").GetComponent<UI> ().UpdateScore ();
+			}
+		}
+	}
 
     void OnCollisionEnter(Collision col)
     {

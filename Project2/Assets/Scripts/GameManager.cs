@@ -4,11 +4,13 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	
 	private UI ui;
+	public static bool isPaused;
 
 	// Use this for initialization
 	void Start () {
 
 		ui = GameObject.Find("UI").GetComponent<UI>();
+		isPaused = false;
 
 		// Set up UI
 		ui.ChangeWeapon(0);
@@ -30,16 +32,24 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void EndGame(){
+		isPaused = true;
 		GameObject.Find("GO").transform.position = new Vector3(transform.position.x, 2.5f, -5);
 		GameObject.Find("GO").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("GOText").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("btnReplay").GetComponent<SpriteRenderer>().enabled = true;
 		GameObject.Find("btnReplay").GetComponent<BoxCollider2D>().enabled = true;
+		GameObject.Find("btnShop").GetComponent<SpriteRenderer>().enabled = true;
+		GameObject.Find("btnShop").GetComponent<BoxCollider2D>().enabled = true;
 		GameObject.Find("btnBack").GetComponent<SpriteRenderer>().enabled = true;
 		GameObject.Find("btnBack").GetComponent<BoxCollider2D>().enabled = true;
-		
+		GameObject.Find("bank").GetComponent<MeshRenderer>().enabled = true;
+
 		int score = ui.getScore();
-		
+
+		// Save to bank
+		ShopManager.AddBank(score);
+		GameObject.Find("bank").GetComponent<TextMesh>().text = "Earned " + score + " Gold (Bank: " + ShopManager.bank + ")";
+
 		// Load current scores
 		float[] highscore = new float[HighScoreManager.AMT_SAVED];
 		for (int i = 0; i<highscore.Length; i++) {

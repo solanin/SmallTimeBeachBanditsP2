@@ -7,7 +7,7 @@ public class ControllerSceneSwitch : MonoBehaviour
     float moveCountDown = 0.5f;
     int position;
 
-    float[] xPos = { -1.7f, 0.0f, 1.7f };
+    float[] xPos = { -2f, -.5f, 1f, 2.5f };
 
     // Use this for initialization
     void Start()
@@ -25,7 +25,7 @@ public class ControllerSceneSwitch : MonoBehaviour
                 if (XCI.GetAxis(XboxAxis.LeftStickX) > 0.0f)
                 {
                     position++;
-                    if (position > 2)
+					if (position > xPos.Length)
                         position = 0;
                 }
                 else
@@ -57,8 +57,11 @@ public class ControllerSceneSwitch : MonoBehaviour
                     break;
                 case 1:
                     Application.LoadLevel("highscore");
-                    break;
-                case 2:
+					break;
+				case 2:
+					Application.LoadLevel("shop");
+					break;
+                case 3:
                     Application.LoadLevel("credits");
                     break;
                 default:
