@@ -21,6 +21,15 @@ public class Enemy : MonoBehaviour {
 
     int fireballCount = 0;
 
+	double[] dmg = new double[7] 
+	{ShopManager.dmg[1,ShopManager.upgrades[1]], 
+		ShopManager.dmg[2,ShopManager.upgrades[2]], 
+		ShopManager.dmg[3,ShopManager.upgrades[3]], 
+		ShopManager.dmg[4,ShopManager.upgrades[4]], 
+		ShopManager.dmg[5,ShopManager.upgrades[5]], 
+		ShopManager.dmg[6,ShopManager.upgrades[6]], 
+		ShopManager.dmg[7,ShopManager.upgrades[7]]};
+
     public GameObject healthDrop;
     public GameObject machineDrop;
     public GameObject fireballDrop;
@@ -55,7 +64,7 @@ public class Enemy : MonoBehaviour {
 			if (laser) {
 				if (laserCounter == 0.5f) {
 					float dist = Vector3.Distance (transform.position, player.transform.position) / 19.0f;
-					health.takeDamage (0.1f - (0.1f * dist));
+					health.takeDamage (dmg[3] - (dmg[3] * dist));
 					laserCounter = 0.0f;
 				} else {
 					laserCounter -= Time.deltaTime;
@@ -69,7 +78,7 @@ public class Enemy : MonoBehaviour {
 			}
 			if (fireball) {
 				if (fireballCounter == 0.3f) {
-					health.takeDamage (0.1f);
+					health.takeDamage (dmg[2]);
 					fireballCounter = 0.0f;
 				} else {
 					fireballCounter -= Time.deltaTime;
@@ -148,16 +157,20 @@ public class Enemy : MonoBehaviour {
         switch (col.gameObject.tag)
         {
             case "Bullet":
-				health.takeDamage(0.3f);
+				health.takeDamage(dmg[0]);
                 Destroy(col.gameObject);
                 break;
+			case "MBullet":
+				health.takeDamage(dmg[1]);
+				Destroy(col.gameObject);
+				break;
             case "SnipeBullet":
-                health.takeDamage(1.5f);
+				health.takeDamage(dmg[4]);
                 Destroy(col.gameObject);
                 break;
             case "ShotBullet":
                 float dist = Vector3.Distance(transform.position, player.transform.position) / 19.0f;
-                health.takeDamage(0.7f - (0.7f * dist));
+				health.takeDamage(dmg[6] - (dmg[6] * dist));
                 Destroy(col.gameObject);
                 break;
             case "Fireball":
@@ -204,7 +217,7 @@ public class Enemy : MonoBehaviour {
         }
         else if (col.gameObject.tag == "Explosion")
         {
-            health.takeDamage(1.0f);
+			health.takeDamage(dmg[5]);
         }
     }
     void OnTriggerExit(Collider col)

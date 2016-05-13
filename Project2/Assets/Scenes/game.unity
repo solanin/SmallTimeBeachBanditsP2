@@ -1126,11 +1126,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 463510, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 471624, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 194250, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_Layer
@@ -1167,7 +1167,7 @@ Prefab:
       objectReference: {fileID: 744451272}
     - target: {fileID: 464108, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11406064, guid: 3565a267d01be9c428c9b9d476723600, type: 2}
       propertyPath: machineGunBulletPrefab

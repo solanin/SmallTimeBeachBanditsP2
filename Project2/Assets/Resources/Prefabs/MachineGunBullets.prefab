@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2354718}
   m_Layer: 10
   m_Name: Bullet
-  m_TagString: Bullet
+  m_TagString: MBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ GameObject:
   - 23: {fileID: 2305330}
   m_Layer: 10
   m_Name: Bullet (1)
-  m_TagString: Bullet
+  m_TagString: MBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,7 @@ GameObject:
   - 23: {fileID: 2327404}
   m_Layer: 10
   m_Name: Bullet (3)
-  m_TagString: Bullet
+  m_TagString: MBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ GameObject:
   - 23: {fileID: 2396020}
   m_Layer: 10
   m_Name: Bullet (2)
-  m_TagString: Bullet
+  m_TagString: MBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.23137522, y: 5.6998053, z: -13.804285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434646}

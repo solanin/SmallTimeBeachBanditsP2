@@ -21,6 +21,7 @@ TagManager:
   - GrenadeDrop
   - SniperDrop
   - ShotgunDrop
+  - MBullet
   layers:
   - Default
   - TransparentFX

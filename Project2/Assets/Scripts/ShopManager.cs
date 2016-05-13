@@ -7,7 +7,7 @@ public class ShopManager : MonoBehaviour {
 	public static int AMT_LABELS = 8;
 	public static int AMT_UPGRADES = 6;
 	public static int bank = 0;
-	static double[,] dmg = new double[AMT_LABELS,AMT_UPGRADES];
+	public static double[,] dmg = new double[AMT_LABELS,AMT_UPGRADES];
 	public static int[] upgrades = new int[AMT_LABELS];
 	public static int[] cost = new int[AMT_UPGRADES-1];
 	public TextMesh[] dmgLabels = new TextMesh[AMT_LABELS];
