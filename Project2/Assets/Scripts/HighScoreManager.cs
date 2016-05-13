@@ -6,7 +6,7 @@ using System;
 
 public class HighScoreManager : MonoBehaviour {
 
-	//Score
+	// Score
 	public static int AMT_SAVED = 10;
 	public TextMesh[] highscoreLabels = new TextMesh[AMT_SAVED];
 
@@ -15,7 +15,7 @@ public class HighScoreManager : MonoBehaviour {
 		float[] highscore = new float[AMT_SAVED];
 		for (int i=0; i < AMT_SAVED; i++) {
 			highscore[i] = 0;
-			highscoreLabels [i].text = (i+1)+": "+0;
+			highscoreLabels [i].text = (i + 1) + ": " + 0;
 		}
 		LoadScores (highscore);
 		UpdateLabels (highscore);
@@ -29,7 +29,7 @@ public class HighScoreManager : MonoBehaviour {
 
 	void UpdateLabels (float[] highscore) {
 		for (int i=0; i < AMT_SAVED; i++) {
-			highscoreLabels [i].text = (i+1)+": "+highscore [i];
+			highscoreLabels [i].text = (i + 1) + ": " + highscore [i];
 		}
 	}
 
