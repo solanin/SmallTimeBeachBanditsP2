@@ -116,29 +116,29 @@ public class Enemy : MonoBehaviour {
 					x = 13;
 				}
 				for (int i = 0; i < x; i++) {
-					int drop = Random.Range (0, 26);
+					int drop = Random.Range (0, 38);
 
-					if (drop < 12) {
+					if (drop < 25) {
 						//drop nothing
-					} else if (drop < 15) {
+					} else if (drop < 27) {
 						// drop health
 						Instantiate (healthDrop, new Vector3 (transform.position.x, transform.position.y + .1f), Quaternion.identity);
-					} else if (drop < 17) {
+					} else if (drop < 29) {
 						//drop machine gun
 						Instantiate (machineDrop, new Vector3 (transform.position.x, transform.position.y), Quaternion.identity);
-					} else if (drop < 19) {
+					} else if (drop < 31) {
 						//drop fire ball
 						Instantiate (fireballDrop, new Vector3 (transform.position.x + .1f, transform.position.y), Quaternion.identity);
-					} else if (drop < 21) {
+					} else if (drop < 33) {
 						//drop laser
 						Instantiate (laserDrop, new Vector3 (transform.position.x - .1f, transform.position.y - .1f), Quaternion.identity);
-					} else if (drop < 23) {
+					} else if (drop < 35) {
 						//drop sniper
 						Instantiate (sniperDrop, new Vector3 (transform.position.x + .1f, transform.position.y + .1f), Quaternion.identity);
-					} else if (drop < 25) {
+					} else if (drop < 37) {
 						//drop shotgun
 						Instantiate (shotgunDrop, new Vector3 (transform.position.x, transform.position.y - .1f), Quaternion.identity);
-					} else if (drop == 25) {
+					} else if (drop == 37) {
 						//drop grenade
 						Instantiate (grenadeDrop, new Vector3 (transform.position.x - .1f, transform.position.y), Quaternion.identity);
 					}
@@ -146,9 +146,10 @@ public class Enemy : MonoBehaviour {
 				Destroy (self);
 				alive = false;
 				em.GenerateEnemy (index);
-				GameObject.Find ("UI").GetComponent<UI> ().AddToScore ();
-				GameObject.Find ("UI").GetComponent<UI> ().UpdateScore ();
-			}
+                GameObject.Find("UI").GetComponent<UI>().AddToScore();
+                GameObject.Find("UI").GetComponent<UI>().UpdateScore();
+                GameObject.Find("UI").GetComponent<UI>().AddToKill();
+            }
 		}
 	}
 

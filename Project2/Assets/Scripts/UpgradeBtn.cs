@@ -23,6 +23,7 @@ public class UpgradeBtn : MonoBehaviour {
 				ShopManager.bank -= ShopManager.cost [ShopManager.upgrades [index]];
 				ShopManager.upgrades [index]++;
 				Debug.Log ("Bought " + index + " upgrade " + ShopManager.upgrades [index] + " for " + ShopManager.cost [ShopManager.upgrades [index]-1]);
+                ShopManager.CheckAchievement(index, ShopManager.upgrades[index]);
 			}
 			if (ShopManager.upgrades [index] == (ShopManager.AMT_UPGRADES-1)) {
 				upgradeButtonText.text = "MAX";

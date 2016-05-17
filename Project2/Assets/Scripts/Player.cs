@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     float sniperCool = 1.5f;
     float shotgunCool = 1.5f;
     float fireballCool = 1.0f;
+    float grenadeCool = 2.0f;
 
     bool laser = false;
     public bool Laser { get { return laser; } }
@@ -67,9 +68,16 @@ public class Player : MonoBehaviour
 			if (!health.isDead ()) {
 				if (bulletCool < 0.15f)
 					bulletCool += Time.deltaTime;
-				if (sniperCool < 0.5f)
+				if (sniperCool < 1.5f)
 					sniperCool += Time.deltaTime;
-				if (immune) {
+                if (shotgunCool < 1.5f)
+                    shotgunCool += Time.deltaTime;
+                if (fireballCool < 1.0f)
+                    fireballCool += Time.deltaTime;
+                if (grenadeCool < 1.0f)
+                    grenadeCool += Time.deltaTime;
+
+                if (immune) {
 					playerFlashTime -= Time.deltaTime;
 					Flash ();
 					if (playerFlashTime <= 0.0f) {
@@ -296,15 +304,16 @@ public class Player : MonoBehaviour
                 Instantiate(pistolBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                 break;
             case 2:
-                if (bullets[currentWeapon] > 0)
+                if (bullets[currentWeapon] > 0 && fireballCool >= 1.0f)
                 {
                     Instantiate(fireballPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    fireballCool = 0.0f;
                     bullets[currentWeapon] -= 1;
                     gm.UpdateAmo(bullets[currentWeapon]);
                 }
                 break;
             case 4:
-                if (bullets[currentWeapon] > 0 && sniperCool >= 0.5f)
+                if (bullets[currentWeapon] > 0 && sniperCool >= 1.5f)
                 {
                     Instantiate(sniperBulletPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
                     sniperCool = 0.0f;
@@ -313,17 +322,19 @@ public class Player : MonoBehaviour
                 }
                 break;
             case 5:
-                if (bullets[currentWeapon] > 0)
+                if (bullets[currentWeapon] > 0 && shotgunCool >= 1.5f)
                 {
                     Instantiate(shotGunPrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    shotgunCool = 0.0f;
                     bullets[currentWeapon] -= 5;
                     gm.UpdateAmo(bullets[currentWeapon]);
                 }
                 break;
             case 6:
-                if (bullets[currentWeapon] > 0)
+                if (bullets[currentWeapon] > 0 && grenadeCool >= 2.0f)
                 {
                     Instantiate(grenadePrefab, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+                    grenadeCool = 2.0f;
                     bullets[currentWeapon] -= 1;
                     gm.UpdateAmo(bullets[currentWeapon]);
                 }

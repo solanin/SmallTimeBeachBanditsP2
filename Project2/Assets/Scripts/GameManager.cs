@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour {
 		ShopManager.AddBank(score);
 		GameObject.Find("bank").GetComponent<TextMesh>().text = "Earned " + score + " Gold (Bank: " + ShopManager.bank + ")";
 
-		// Load current scores
-		float[] highscore = new float[HighScoreManager.AMT_SAVED];
+        // Load current scores
+        float[] highscore = new float[HighScoreManager.AMT_SAVED];
 		for (int i = 0; i<highscore.Length; i++) {
 			highscore[i] = PlayerPrefs.GetFloat ("Score " + i);
 		}

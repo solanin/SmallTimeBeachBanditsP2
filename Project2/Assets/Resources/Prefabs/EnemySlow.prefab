@@ -47,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.364948, y: -0.5, z: 0}
+  m_LocalPosition: {x: -15, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 428112}
@@ -209,7 +209,7 @@ MonoBehaviour:
   speed: 45
   damage: 1
   alive: 0
-  index: 0
+  index: 1
   jumper: 0
   healthDrop: {fileID: 145012, guid: f3a3036f263844f4e86b9512d4b1b43b, type: 2}
   machineDrop: {fileID: 113748, guid: e6b0d7b9e7b4a7147957f53772562313, type: 2}
