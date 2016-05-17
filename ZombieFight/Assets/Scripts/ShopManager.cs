@@ -10,13 +10,14 @@ public class ShopManager : MonoBehaviour
     public static int bank = 0;
     public static double[,] dmg = new double[AMT_LABELS, AMT_UPGRADES];
     public static int[] upgrades = new int[AMT_LABELS];
-    public static int[] cost = new int[AMT_UPGRADES - 1];
-    public TextMesh[] dmgLabels = new TextMesh[AMT_LABELS];
+	public static int[] cost = new int[AMT_LABELS];
+	public TextMesh[] dmgLabels = new TextMesh[AMT_LABELS];
+	public GameObject[] starLabels = new GameObject[AMT_LABELS];
     public static TextMesh achievement;
     private static float achieveMessageCountDown = 0.0f;
-    private static bool grenade;
-    private static bool shotgun;
-    private static bool sniper;
+	public static bool grenade;
+	public static bool shotgun;
+	public static bool sniper;
 
     // Use this for initialization
     void Start()
@@ -26,7 +27,11 @@ public class ShopManager : MonoBehaviour
         cost[1] = 200;
         cost[2] = 300;
         cost[3] = 400;
-        cost[4] = 500;
+		cost[4] = 500;
+		cost[5] = 350;
+		cost[6] = 550;
+		cost[7] = 750;
+
 
         // Health
         dmg[0, 0] = 100;
@@ -95,7 +100,6 @@ public class ShopManager : MonoBehaviour
         // Show
         LoadUpgrades();
         ShowUpgrades();
-        
     }
 
     void Update()
@@ -120,6 +124,7 @@ public class ShopManager : MonoBehaviour
             upgrades[i] = PlayerPrefs.GetInt("Upgrade " + i);
         }
         bank = PlayerPrefs.GetInt("Bank");
+		bank = 5000;
     }
 
     public static void SaveUpgrade(int index, int amt)
@@ -138,9 +143,71 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < AMT_LABELS; i++)
         {
-            dmgLabels[i].text = "" + dmg[i, upgrades[i]];
+			if ((i < 5) || (i == 5 && sniper) || (i == 6 && grenade) || (i == 7 && shotgun)) {
+				if (i != 0) dmgLabels[i].text = "Dmg: " + dmg[i, upgrades[i]];
+				else dmgLabels[i].text = "" + dmg[i, upgrades[i]];
+				ShowStars (i, upgrades [i]);
+			} else {
+				dmgLabels[i].text = "Locked";
+				ShowStars (i, -1);
+			}
         }
     }
+
+	public void ShowStars(int index, int star)
+	{
+		switch (star) {
+		case 0:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			break;
+		case 1:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			break;
+		case 2:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			break;
+		case 3:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			break;
+		case 4:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty");
+			break;
+		case 5:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_filled");
+			break;
+		default:
+			starLabels [index].transform.FindChild("star1").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty/none");
+			starLabels [index].transform.FindChild("star2").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty/none");
+			starLabels [index].transform.FindChild("star3").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty/none");
+			starLabels [index].transform.FindChild("star4").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty/none");
+			starLabels [index].transform.FindChild("star5").GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Sprites/star_empty/none");
+			break;
+		}
+	}
 
     public static void CheckAchievement(int index, int amt)
     {
