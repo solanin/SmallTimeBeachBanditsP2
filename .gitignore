@@ -4,7 +4,7 @@
 *.pidb
 *.unityproj
 .DS_Store
-/Project2/Library
-/Project2/obj
-/Project2/Temp
-/Project2/vs
+/ZombieFight/Library
+/ZombieFight/obj
+/ZombieFight/Temp
+/ZombieFight/vs
