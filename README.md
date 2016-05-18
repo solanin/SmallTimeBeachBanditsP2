@@ -20,26 +20,30 @@ Download the EXE here: <Coming Soon>
 
 ###Enemies
 
-**Blue Enemies** - Normal enemy, 3 shots to kill(pistol) and med speed
+**Blue Enemies** - Normal enemy, med speed
 
-**Yellow Enemies** - Fast enemy, 2 shots to kill(pistol) and fast speed
+**Yellow Enemies** - Fast enemy, fast speed
 
-**Green Enemies** - Slow enemy, 4 shots to kill(pistol) and slow speed
+**Green Enemies** - Slow enemy, slow speed
 
-**Light Green Enemies** - Jumping enemy, 3 shots to kill(pistol), med speed, and can jump
+**Light Green Enemies** - Jumping enemy, med speed, and can jump
+
+**Orange Enemies** - Obstacle enemy, no speed
+
+**Red Enemies** - Boss enemy, slow speed, giant
 
 ###Responsibility
 **Yanting Cheung**
 
-Weapons, Shooting, Pickups
+Weapons, Shooting, Pickups, Achievements
 
 **Jacob Westerback**
 
-Environment, Health bar, UI, High score, Menus
+Environment, Health bar, UI, High score, Menus, Shop, Upgrades
 
 **Conner Westover**
 
-Enemy types, Enemy spawning, Controls
+Enemy types, Enemy spawning, Controls, Level Design
 
 ###Post Mortem
-Overall we acomplished what we set out to do. One thing that could be imporved is enemy AI. 
+Overall we accomplished what we set out to do with the exception of connecting to Facebook. We decided to upgrade our project to a newer version, but that messed up a lot of things and a lot of fixing was needed.
