@@ -229,28 +229,22 @@ public class ShopManager : MonoBehaviour
 
     public static void CheckAchievement(int index, int amt)
     {
-        if (index == 0 && amt == 1 && !PlayerPrefs.HasKey("HEALTH ONCE"))
+		if (index == 0 && amt == 1 && !Achieivement.CheckAchieved(0))
         {
-            PlayerPrefs.SetString("HEALTH ONCE", "ACHIEVED");
-            ShowAchievement("Upgraded health once, +100 gold");
-            AddBank(100);
+			Achieivement.Achieve (0, achievement, achieveMessageCountDown);
         }
 
-        if (index == 0 && amt == AMT_UPGRADES - 1 && !PlayerPrefs.HasKey("HEALTH MAX"))
+		if (index == 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(1))
         {
-            PlayerPrefs.SetString("HEALTH MAX", "ACHIEVED");
-            ShowAchievement("Maxed out health, +200 gold");
-            AddBank(200);
+			Achieivement.Achieve (1, achievement, achieveMessageCountDown);
         }
 
-        if (index > 0 && amt == AMT_UPGRADES - 1 && !PlayerPrefs.HasKey("WEAPON ONE MAX"))
+		if (index > 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(2))
         {
-            PlayerPrefs.SetString("WEAPON ONE MAX", "ACHIEVED");
-            ShowAchievement("Maxed out one weapon, +100 gold");
-            AddBank(100);
+			Achieivement.Achieve (2, achievement, achieveMessageCountDown);
         }
 
-        if (index > 0 && amt == AMT_UPGRADES - 1 && !PlayerPrefs.HasKey("WEAPON ALL MAX"))
+		if (index > 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(3))
         {
             bool allMax = true;
 
@@ -264,24 +258,28 @@ public class ShopManager : MonoBehaviour
 
             if (allMax)
             {
-                PlayerPrefs.SetString("WEAPON ALL MAX", "ACHIEVED");
-                ShowAchievement("Maxed out one weapon, +200 gold");
-                AddBank(200);
+				Achieivement.Achieve (3, achievement, achieveMessageCountDown);
             }
         }
 
-        if (sniper && shotgun && grenade && !PlayerPrefs.HasKey("UNLOCK ALL"))
+		if (sniper && shotgun && grenade && !Achieivement.CheckAchieved(4))
         {
-            PlayerPrefs.SetString("UNLOCK ALL", "ACHIEVED");
-            ShowAchievement("Unlocked all weapons, +100 gold");
-            AddBank(100);
+			Achieivement.Achieve (4, achievement, achieveMessageCountDown);
         }
 
     }
 
-    public static void ShowAchievement(string message)
-    {
-        achievement.text = "Achievement: " + message;
-        achieveMessageCountDown = 1.5f;
-    }
+	public static void resetUpgrades()
+	{
+		for (int i = 0; i < AMT_LABELS; i++)
+		{
+			PlayerPrefs.SetInt("Upgrade " + i, 0);
+		}
+
+		PlayerPrefs.SetInt("Bank", 0);
+
+		PlayerPrefs.SetInt ("Unlock 1", 0);
+		PlayerPrefs.SetInt ("Unlock 2", 0);
+		PlayerPrefs.SetInt ("Unlock 3", 0);
+	}
 }

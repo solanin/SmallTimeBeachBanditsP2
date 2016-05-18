@@ -92,48 +92,35 @@ public class UI : MonoBehaviour {
         totalKill++;
         currentKill++;
 
-        if (totalKill == 50 && !PlayerPrefs.HasKey("KILL 50"))
+		if (totalKill == 50 && !Achieivement.CheckAchieved(5))
         {
-            PlayerPrefs.SetString("KILL 50", "ACHIEVED");
-            ShowAchievement("Killed 50 in total, +5 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 5);
+			Achieivement.Achieve (5, achievement, achieveMessageCountDown);
         }
-        if (totalKill == 100 && !PlayerPrefs.HasKey("KILL 100"))
+		if (totalKill == 100 && !Achieivement.CheckAchieved(6))
         {
-            PlayerPrefs.SetString("KILL 100", "ACHIEVED");
-            ShowAchievement("Killed 100 in total, +10 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 10);
+			Achieivement.Achieve (6, achievement, achieveMessageCountDown);
         }
-        if (totalKill == 500 && !PlayerPrefs.HasKey("KILL 500"))
+		if (totalKill == 500 && !Achieivement.CheckAchieved(7))
         {
-            PlayerPrefs.SetString("KILL 500", "ACHIEVED");
-            ShowAchievement("Killed 500 in total, +50 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 50);
+			Achieivement.Achieve (7, achievement, achieveMessageCountDown);
         }
-        if (totalKill == 1000 && !PlayerPrefs.HasKey("KILL 1000"))
+		if (totalKill == 1000 && !Achieivement.CheckAchieved(8))
         {
-            PlayerPrefs.SetString("KILL 1000", "ACHIEVED");
-            ShowAchievement("Killed 1000 in total, +100 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 100);
+			Achieivement.Achieve (8, achievement, achieveMessageCountDown);
+
         }
-        if (totalKill == 5000 && !PlayerPrefs.HasKey("KILL 5000"))
+		if (totalKill == 5000 && !Achieivement.CheckAchieved(9))
         {
-            PlayerPrefs.SetString("KILL 5000", "ACHIEVED");
-            ShowAchievement("Killed 5000 in total, +500 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 500);
+			Achieivement.Achieve (9, achievement, achieveMessageCountDown);
         }
-        if (currentKill >= 500 && !PlayerPrefs.HasKey("KILL 500 IN ONE"))
-        {
-            PlayerPrefs.SetString("KILL 500 IN ONE", "ACHIEVED");
-            ShowAchievement("Killed 500 in one game, +200 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 200);
+		if (currentKill >= 500 && !Achieivement.CheckAchieved(10))
+		{			
+			Achieivement.Achieve (10, achievement, achieveMessageCountDown);
         }
 
-        if (currentKill >= 1000 && !PlayerPrefs.HasKey("KILL 1000 IN ONE"))
+		if (currentKill >= 1000 && !Achieivement.CheckAchieved(11))
         {
-            PlayerPrefs.SetString("KILL 1000 IN ONE", "ACHIEVED");
-            ShowAchievement("Killed 1000 in one game, +500 gold");
-            PlayerPrefs.SetInt("Bank", PlayerPrefs.GetInt("Bank") + 200);
+			Achieivement.Achieve (11, achievement, achieveMessageCountDown);
         }
 
         PlayerPrefs.SetInt("TOTAL KILL", totalKill);
@@ -142,10 +129,4 @@ public class UI : MonoBehaviour {
     public void UpdateScore() {
 		score.text = ""+scoreAmt;
 	}
-
-    public void ShowAchievement(string message)
-    {
-        achievement.text = "Achievement: " + message;
-        achieveMessageCountDown = 1.5f;
-    }
 }

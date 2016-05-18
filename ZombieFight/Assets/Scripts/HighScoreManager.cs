@@ -33,8 +33,7 @@ public class HighScoreManager : MonoBehaviour {
 		}
 	}
 
-	public static void insertHighScore(float[] highscore, int insertAt, int score)
-	{
+	public static void insertHighScore(float[] highscore, int insertAt, int score) {
 		//Debug.Log("INSERT " + score + " AT " + (insertAt+1));
 		for (int i = highscore.Length-1; i >= insertAt; i--)
 		{
@@ -42,5 +41,11 @@ public class HighScoreManager : MonoBehaviour {
 			//Debug.Log("EDITING " + i);
 		}
 		highscore[insertAt] = score;
+	}
+
+	public static void resetScores() {
+		for (int i=0; i < AMT_SAVED; i++) {
+			PlayerPrefs.SetFloat ("Score " + i, 0);
+		}
 	}
 }
