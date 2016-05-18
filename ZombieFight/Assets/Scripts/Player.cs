@@ -135,6 +135,11 @@ public class Player : MonoBehaviour
 				if (XCI.GetAxis (XboxAxis.RightStickX) > 0.5f || XCI.GetAxis (XboxAxis.RightStickX) < -0.5f || XCI.GetAxis (XboxAxis.RightStickY) > 0.5f || XCI.GetAxis (XboxAxis.RightStickY) < -0.5f) {
 					shootX = XCI.GetAxis (XboxAxis.RightStickX);
 					shootY = XCI.GetAxis (XboxAxis.RightStickY);
+                    if (bullets[currentWeapon] == 0)
+                    {
+                        currentWeapon = 0;
+                        gm.UpdateUI(currentWeapon, bullets);
+                    }
 					fireBullet ();
 					restRightStick = false;
 				}
@@ -148,7 +153,12 @@ public class Player : MonoBehaviour
 
 				if (XCI.GetAxis (XboxAxis.RightTrigger) > 0.5) {
 					if (restRightTrigger) {
-						fireShots ();
+                        if (bullets[currentWeapon] == 0)
+                        {
+                            currentWeapon = 0;
+                            gm.UpdateUI(currentWeapon, bullets);
+                        }
+                        fireShots();
 						restRightTrigger = false;
 					}
 				} else {
