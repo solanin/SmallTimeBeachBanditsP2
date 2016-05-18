@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Achieivement : MonoBehaviour {
+public static class Achieivement {
 
 	static void ShowAchievement(string message, TextMesh achievement, float achieveMessageCountDown)
 	{
@@ -13,6 +13,9 @@ public class Achieivement : MonoBehaviour {
 		PlayerPrefs.SetString(key, "ACHIEVED");
 		ShowAchievement(message+", +"+reward+"gold", achievement, achieveMessageCountDown);
 		ShopManager.AddBank(reward);
+
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
 	}
 
 	public static bool CheckAchieved (int i) {
@@ -114,5 +117,8 @@ public class Achieivement : MonoBehaviour {
 		PlayerPrefs.SetString("KILL 5000", "UNACHIEVED");
 		PlayerPrefs.SetString("KILL 500 IN ONE", "UNACHIEVED");
 		PlayerPrefs.SetString("KILL 1000 IN ONE", "UNACHIEVED");
+
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
 	}
 }

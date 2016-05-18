@@ -83,6 +83,16 @@ public class ShopManager : MonoBehaviour
 		dmg[7, 3] = 1.00;
 		dmg[7, 4] = 1.20;
 		dmg[7, 5] = 1.40;
+
+		// Cost
+		cost[0] = 100;
+		cost[1] = 200;
+		cost[2] = 300;
+		cost[3] = 400;
+		cost[4] = 500;
+		cost[5] = 350;
+		cost[6] = 550;
+		cost[7] = 750;
 	}
 
 
@@ -90,18 +100,6 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
 		achievement = GameObject.Find ("achievement").GetComponent<TextMesh> ();
-
-        // Cost
-        cost[0] = 100;
-        cost[1] = 200;
-        cost[2] = 300;
-        cost[3] = 400;
-		cost[4] = 500;
-		cost[5] = 350;
-		cost[6] = 550;
-		cost[7] = 750;
-
-		Setup ();
 
         // Show
         LoadUpgrades();
@@ -143,16 +141,21 @@ public class ShopManager : MonoBehaviour
 			shotgun = false;
 		} else { shotgun = true; }
     }
-
+	
 	public static void SaveUnlock(int index)
 	{
 		PlayerPrefs.SetInt("Unlock " + index, 1);
+		AddBank(0);
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
 	}
 
     public static void SaveUpgrade(int index, int amt)
     {
         PlayerPrefs.SetInt("Upgrade " + index, amt);
         AddBank(0);
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
     }
 
     public static void AddBank(int amt)
@@ -285,5 +288,8 @@ public class ShopManager : MonoBehaviour
 		PlayerPrefs.SetInt ("Unlock 1", 0);
 		PlayerPrefs.SetInt ("Unlock 2", 0);
 		PlayerPrefs.SetInt ("Unlock 3", 0);
+
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
 	}
 }

@@ -52,11 +52,11 @@ public class GameManager : MonoBehaviour {
 		GameObject.Find("bank").GetComponent<TextMesh>().text = "Earned " + score + " Gold (Bank: " + ShopManager.bank + ")";
 
         // Load current scores
-        float[] highscore = new float[HighScoreManager.AMT_SAVED];
+        int[] highscore = new int[HighScoreManager.AMT_SAVED];
 		for (int i = 0; i<highscore.Length; i++) {
-			highscore[i] = PlayerPrefs.GetFloat ("Score " + i);
+			highscore[i] = PlayerPrefs.GetInt ("Score " + i);
 		}
-		
+
 		// Check
 		bool gotHighScore = false;
 		int atLoc = highscore.Length;
@@ -70,13 +70,6 @@ public class GameManager : MonoBehaviour {
 		// did you reach a highscore?
 		if (gotHighScore && (atLoc<highscore.Length)) {
 			HighScoreManager.insertHighScore(highscore, atLoc, score);
-			
-			//Save New
-			for (int i = 0; i<HighScoreManager.AMT_SAVED; i++) {
-				PlayerPrefs.SetFloat("Score " + i, highscore[i]);
-			}
-			PlayerPrefs.Save ();
-			Debug.Log("SAVE");
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class HighScoreManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		float[] highscore = new float[AMT_SAVED];
+		int[] highscore = new int[AMT_SAVED];
 		for (int i=0; i < AMT_SAVED; i++) {
 			highscore[i] = 0;
 			highscoreLabels [i].text = (i + 1) + ": " + 0;
@@ -21,19 +21,19 @@ public class HighScoreManager : MonoBehaviour {
 		UpdateLabels (highscore);
 	}
 
-	void LoadScores (float[] highscore) {
+	void LoadScores (int[] highscore) {
 		for (int i=0; i < AMT_SAVED; i++) {
-			highscore [i] = PlayerPrefs.GetFloat ("Score " + i);
+			highscore [i] = PlayerPrefs.GetInt ("Score " + i);
 		}
 	}
 
-	void UpdateLabels (float[] highscore) {
+	void UpdateLabels (int[] highscore) {
 		for (int i=0; i < AMT_SAVED; i++) {
 			highscoreLabels [i].text = (i + 1) + ": " + highscore [i];
 		}
 	}
 
-	public static void insertHighScore(float[] highscore, int insertAt, int score) {
+	public static void insertHighScore(int[] highscore, int insertAt, int score) {
 		//Debug.Log("INSERT " + score + " AT " + (insertAt+1));
 		for (int i = highscore.Length-1; i >= insertAt; i--)
 		{
@@ -45,7 +45,9 @@ public class HighScoreManager : MonoBehaviour {
 
 	public static void resetScores() {
 		for (int i=0; i < AMT_SAVED; i++) {
-			PlayerPrefs.SetFloat ("Score " + i, 0);
+			PlayerPrefs.SetInt ("Score " + i, 0);
 		}
+		PlayerPrefs.Save ();
+		Debug.Log("SAVE");
 	}
 }
