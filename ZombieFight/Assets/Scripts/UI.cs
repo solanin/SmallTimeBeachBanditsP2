@@ -30,11 +30,7 @@ public class UI : MonoBehaviour {
 		ChangeWeapon(0);
 		UpdateAmo(-1.0f);
 		UpdateScore();
-
-        if (PlayerPrefs.HasKey("TOTAL KILL"))
-        {
-            totalKill = PlayerPrefs.GetInt("TOTAL KILL");
-        }
+        totalKill = PlayerPrefs.GetInt("TOTAL KILL");
 	}
 
     void Update()
