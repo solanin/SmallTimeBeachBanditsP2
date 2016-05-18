@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour {
 
 		// Make the Shop Manager Exist
 		ShopManager sm = new ShopManager();
+		sm.Setup ();
 
 		// RESET ALL DATA
 		//ShopManager.resetUpgrades();
