@@ -224,13 +224,33 @@ public class Player : MonoBehaviour
             
 
 				if (Input.GetKeyDown (KeyCode.U) || Input.GetKeyDown (KeyCode.O) || Input.GetKeyDown (KeyCode.M) || Input.GetKeyDown (KeyCode.Period)) {
+                    if (bullets[currentWeapon] == 0)
+                    {
+                        currentWeapon = 0;
+                        gm.UpdateUI(currentWeapon, bullets);
+                    }
 					fireShots ();
 				} else if (Input.GetKeyDown (KeyCode.L) || Input.GetKeyDown (KeyCode.I) || Input.GetKeyDown (KeyCode.J) || Input.GetKeyDown (KeyCode.K)) {
-					fireShots ();
+                    if (bullets[currentWeapon] == 0)
+                    {
+                        currentWeapon = 0;
+                        gm.UpdateUI(currentWeapon, bullets);
+                    }
+                    fireShots ();
 				}
 
 				if (Input.GetKey (KeyCode.L) || Input.GetKey (KeyCode.I) || Input.GetKey (KeyCode.J) || Input.GetKey (KeyCode.K) || Input.GetKey (KeyCode.U) || Input.GetKey (KeyCode.O) || Input.GetKey (KeyCode.M) || Input.GetKey (KeyCode.Period)) {
-					fireBullet ();
+                    if (bullets[currentWeapon] == 0)
+                    {
+                        currentWeapon = 0;
+                        gm.UpdateUI(currentWeapon, bullets);
+                        fireShots();
+                    }
+                    else
+                    {
+                        fireBullet();
+                    }
+                    
 				} else if (restRightStick) {
 					laser = false;
 				}
