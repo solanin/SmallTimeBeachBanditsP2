@@ -147,6 +147,11 @@ public class Enemy : MonoBehaviour {
 				alive = false;
 				em.GenerateEnemy (index);
                 GameObject.Find("UI").GetComponent<UI>().AddToScore();
+				if(self.layer == 13){
+					for (int i = 0; i < 9; i++){
+						GameObject.Find("UI").GetComponent<UI>().AddToScore();
+					}
+				}
                 GameObject.Find("UI").GetComponent<UI>().UpdateScore();
                 GameObject.Find("UI").GetComponent<UI>().AddToKill();
             }
