@@ -44,14 +44,17 @@ public class UpgradeBtn : MonoBehaviour {
 				ShopManager.bank -= ShopManager.cost [5];
 				ShopManager.sniper = true;
 				Debug.Log ("Unlocked Sniper for " + ShopManager.cost [5]);
+				ShopManager.SaveUnlock (1);
 			} else if (index == 6 && ShopManager.bank >= ShopManager.cost [6]) {
 				ShopManager.bank -= ShopManager.cost [6];
 				ShopManager.grenade = true;
-				Debug.Log ("Unlocked Grenade for " + ShopManager.cost [6]);				
+				Debug.Log ("Unlocked Grenade for " + ShopManager.cost [6]);	
+				ShopManager.SaveUnlock (2);
 			} else if (index == 7 && ShopManager.bank >= ShopManager.cost [7]) {
 				ShopManager.bank -= ShopManager.cost [7];
 				ShopManager.shotgun = true;
-				Debug.Log ("Unlocked Shot Gun for " + ShopManager.cost [7]);				
+				Debug.Log ("Unlocked Shot Gun for " + ShopManager.cost [7]);
+				ShopManager.SaveUnlock (3);				
 			}
 		}
 	}

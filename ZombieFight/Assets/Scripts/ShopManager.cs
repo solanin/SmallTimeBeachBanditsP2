@@ -22,6 +22,8 @@ public class ShopManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		achievement = GameObject.Find ("achievement").GetComponent<TextMesh> ();
+
         // Cost
         cost[0] = 100;
         cost[1] = 200;
@@ -124,8 +126,24 @@ public class ShopManager : MonoBehaviour
             upgrades[i] = PlayerPrefs.GetInt("Upgrade " + i);
         }
         bank = PlayerPrefs.GetInt("Bank");
-		bank = 5000;
+
+		if (PlayerPrefs.GetInt ("Unlock 1") == 0) {
+			sniper = false;
+		} else { sniper = true; }
+
+		if (PlayerPrefs.GetInt ("Unlock 2") == 0) {
+			grenade = false;
+		} else { grenade = true; }
+
+		if (PlayerPrefs.GetInt ("Unlock 3") == 0) {
+			shotgun = false;
+		} else { shotgun = true; }
     }
+
+	public static void SaveUnlock(int index)
+	{
+		PlayerPrefs.SetInt("Unlock " + index, 1);
+	}
 
     public static void SaveUpgrade(int index, int amt)
     {
