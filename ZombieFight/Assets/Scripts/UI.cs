@@ -90,33 +90,33 @@ public class UI : MonoBehaviour {
 
 		if (totalKill == 50 && !Achieivement.CheckAchieved(5))
         {
-			Achieivement.Achieve (5, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (5, achievement, ref achieveMessageCountDown);
         }
 		if (totalKill == 100 && !Achieivement.CheckAchieved(6))
         {
-			Achieivement.Achieve (6, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (6, achievement, ref achieveMessageCountDown);
         }
 		if (totalKill == 500 && !Achieivement.CheckAchieved(7))
         {
-			Achieivement.Achieve (7, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (7, achievement, ref achieveMessageCountDown);
         }
 		if (totalKill == 1000 && !Achieivement.CheckAchieved(8))
         {
-			Achieivement.Achieve (8, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (8, achievement, ref achieveMessageCountDown);
 
         }
 		if (totalKill == 5000 && !Achieivement.CheckAchieved(9))
         {
-			Achieivement.Achieve (9, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (9, achievement, ref achieveMessageCountDown);
         }
 		if (currentKill >= 500 && !Achieivement.CheckAchieved(10))
 		{			
-			Achieivement.Achieve (10, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (10, achievement, ref achieveMessageCountDown);
         }
 
 		if (currentKill >= 1000 && !Achieivement.CheckAchieved(11))
         {
-			Achieivement.Achieve (11, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (11, achievement, ref achieveMessageCountDown);
         }
 
         PlayerPrefs.SetInt("TOTAL KILL", totalKill);
