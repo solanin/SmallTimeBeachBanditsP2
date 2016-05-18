@@ -14,9 +14,7 @@ Download the EXE here: <Coming Soon>
 ### Controls
 **W,A,D** - Movement, you can jump through platforms but not down.
 
-**J,I,L** - Aim, can be diagonal. If none are pressed it will shoot the facing direction
-
-**Spacebar** - Shoot
+**J,I,K,L** - Shoot, can be diagonal. If none are pressed it will shoot the facing direction
 
 **E,R** - Cycle through weapons
 
