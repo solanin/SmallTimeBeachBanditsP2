@@ -125,7 +125,16 @@ public class ShopManager : MonoBehaviour
         }
         bank = PlayerPrefs.GetInt("Bank");
 		bank = 5000;
+
+		sniper = PlayerPrefs.GetInt("Unlock 1");
+		grenade = PlayerPrefs.GetInt("Unlock 2");
+		shotgun = PlayerPrefs.GetInt("Unlock 3");
     }
+
+	public static void SaveUnlock(int index)
+	{
+		PlayerPrefs.SetInt("Unlock " + index, true);
+	}
 
     public static void SaveUpgrade(int index, int amt)
     {
