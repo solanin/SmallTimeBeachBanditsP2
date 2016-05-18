@@ -235,17 +235,17 @@ public class ShopManager : MonoBehaviour
     {
 		if (index == 0 && amt == 1 && !Achieivement.CheckAchieved(0))
         {
-			Achieivement.Achieve (0, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (0, achievement, ref achieveMessageCountDown);
         }
 
 		if (index == 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(1))
         {
-			Achieivement.Achieve (1, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (1, achievement, ref achieveMessageCountDown);
         }
 
 		if (index > 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(2))
         {
-			Achieivement.Achieve (2, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (2, achievement, ref achieveMessageCountDown);
         }
 
 		if (index > 0 && amt == AMT_UPGRADES - 1 && !Achieivement.CheckAchieved(3))
@@ -262,13 +262,13 @@ public class ShopManager : MonoBehaviour
 
             if (allMax)
             {
-				Achieivement.Achieve (3, achievement, achieveMessageCountDown);
+				Achieivement.Achieve (3, achievement, ref achieveMessageCountDown);
             }
         }
 
 		if (sniper && shotgun && grenade && !Achieivement.CheckAchieved(4))
         {
-			Achieivement.Achieve (4, achievement, achieveMessageCountDown);
+			Achieivement.Achieve (4, achievement, ref achieveMessageCountDown);
         }
 
     }

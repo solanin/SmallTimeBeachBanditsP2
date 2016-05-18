@@ -3,15 +3,15 @@ using System.Collections;
 
 public class Achieivement : MonoBehaviour {
 
-	static void ShowAchievement(string message, TextMesh achievement, float achieveMessageCountDown)
+	static void ShowAchievement(string message, TextMesh achievement, ref float achieveMessageCountDown)
 	{
 		achievement.text = "Achievement: " + message;
 		achieveMessageCountDown = 1.5f;
 	}
 
-	static void GetAchievement(string key, int reward, string message, TextMesh achievement, float achieveMessageCountDown) {
+	static void GetAchievement(string key, int reward, string message, TextMesh achievement, ref float achieveMessageCountDown) {
 		PlayerPrefs.SetString(key, "ACHIEVED");
-		ShowAchievement(message+", +"+reward+"gold", achievement, achieveMessageCountDown);
+		ShowAchievement(message+", +"+reward+"gold", achievement, ref achieveMessageCountDown);
 		ShopManager.AddBank(reward);
 	}
 
@@ -59,43 +59,43 @@ public class Achieivement : MonoBehaviour {
 		return gotIt == "ACHIEVED";
 	}
 
-	public static void Achieve(int i, TextMesh achievement, float achieveMessageCountDown) {
+	public static void Achieve(int i, TextMesh achievement, ref float achieveMessageCountDown) {
 		switch (i) {
 		case 0:
-			GetAchievement ("HEALTH ONCE", 100, "Upgraded health once", achievement, achieveMessageCountDown);
+			GetAchievement ("HEALTH ONCE", 100, "Upgraded health once", achievement, ref achieveMessageCountDown);
 			break;
 		case 1:
-			GetAchievement ("HEALTH MAX", 200, "Maxed out health", achievement, achieveMessageCountDown);
+			GetAchievement ("HEALTH MAX", 200, "Maxed out health", achievement, ref achieveMessageCountDown);
 			break;
 		case 2:
-			GetAchievement ("WEAPON ONE MAX", 100, "Maxed out one weapon", achievement, achieveMessageCountDown);
+			GetAchievement ("WEAPON ONE MAX", 100, "Maxed out one weapon", achievement, ref achieveMessageCountDown);
 			break;
 		case 3:
-			GetAchievement ("WEAPON ALL MAX", 200, "Maxed out all weapons", achievement, achieveMessageCountDown);
+			GetAchievement ("WEAPON ALL MAX", 200, "Maxed out all weapons", achievement, ref achieveMessageCountDown);
 			break;
 		case 4:
-			GetAchievement ("UNLOCK ALL", 100, "Unlocked all weapons", achievement, achieveMessageCountDown);
+			GetAchievement ("UNLOCK ALL", 100, "Unlocked all weapons", achievement, ref achieveMessageCountDown);
 			break;
 		case 5:
-			GetAchievement ("KILL 50", 5, "Killed 50 in total", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 50", 5, "Killed 50 in total", achievement, ref achieveMessageCountDown);
 			break;
 		case 6:
-			GetAchievement ("KILL 100", 10, "Killed 100 in total", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 100", 10, "Killed 100 in total", achievement, ref achieveMessageCountDown);
 			break;
 		case 7:
-			GetAchievement ("KILL 500", 50, "Killed 500 in total", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 500", 50, "Killed 500 in total", achievement, ref achieveMessageCountDown);
 			break;
 		case 8:
-			GetAchievement ("KILL 1000", 100, "Killed 1000 in total", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 1000", 100, "Killed 1000 in total", achievement, ref achieveMessageCountDown);
 			break;
 		case 9:
-			GetAchievement ("KILL 5000", 500, "Killed 5000 in total", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 5000", 500, "Killed 5000 in total", achievement, ref achieveMessageCountDown);
 			break;
 		case 10:
-			GetAchievement ("KILL 500 IN ONE", 200, "Killed 500 in one game", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 500 IN ONE", 200, "Killed 500 in one game", achievement, ref achieveMessageCountDown);
 			break;
 		case 11:
-			GetAchievement ("KILL 1000 IN ONE", 500, "Killed 1000 in one game", achievement, achieveMessageCountDown);
+			GetAchievement ("KILL 1000 IN ONE", 500, "Killed 1000 in one game", achievement, ref achieveMessageCountDown);
 			break;
 		}
 	}
