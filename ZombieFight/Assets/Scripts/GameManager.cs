@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour {
 
 	public void EndGame(){
 		isPaused = true;
-		GameObject.Find("GO").transform.position = new Vector3(transform.position.x, 2.5f, -5);
+        
+		GameObject.Find("GO").transform.position = new Vector3(GameObject.Find("Player").transform.position.x, 2.5f, -5);
 		GameObject.Find("GO").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("GOText").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("btnReplay").GetComponent<SpriteRenderer>().enabled = true;
