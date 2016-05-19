@@ -9,7 +9,7 @@ Pistols have infinite ammo but all the other ones have limited ammo.
 But, do not fear, sometimes there are amo drops when you kill an enemy.
 There are four kinds of pickups, red is for health, the others correspond to the color of each weapon's ammo.
 
-Download the EXE here: <Coming Soon>
+Download the EXE here: https://github.com/solanin/ZombieFight/blob/master/ZombieFight/WindowsBuild/Build.zip
 
 ### Controls
 **W,A,D** - Movement, you can jump through platforms but not down.
