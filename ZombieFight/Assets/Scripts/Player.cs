@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
     float flashTimer = 0.1f;
     float playerFlashTime = 1.0f;
 
+    bool sniper, grenade, shotgun;
+
     void Start()
     {
         self = GameObject.FindGameObjectWithTag("Player");
@@ -58,6 +60,24 @@ public class Player : MonoBehaviour
 
         health = GetComponent<Health>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (PlayerPrefs.GetInt("Unlock 1") == 0)
+        {
+            sniper = false;
+        }
+        else { sniper = true; }
+
+        if (PlayerPrefs.GetInt("Unlock 2") == 0)
+        {
+            grenade = false;
+        }
+        else { grenade = true; }
+
+        if (PlayerPrefs.GetInt("Unlock 3") == 0)
+        {
+            shotgun = false;
+        }
+        else { shotgun = true; }
     }
 
     void Update()
@@ -115,6 +135,21 @@ public class Player : MonoBehaviour
 						laser = false;
 					}
 					currentWeapon++;
+
+                    if (!sniper && currentWeapon == 4)
+                    {
+                        currentWeapon++;
+                    }
+
+                    if (!shotgun && currentWeapon == 5)
+                    {
+                        currentWeapon++;
+                    }
+                    if (!grenade && currentWeapon == 6)
+                    {
+                        currentWeapon++;
+                    }
+
 					if (currentWeapon > 6) {
 						currentWeapon = 0;
 					}
@@ -129,7 +164,25 @@ public class Player : MonoBehaviour
 					if (currentWeapon < 0) {
 						currentWeapon = 6;
 					}
-					gm.UpdateUI (currentWeapon, bullets);
+
+
+                    if (!grenade && currentWeapon == 6)
+                    {
+                        currentWeapon--;
+                    }
+
+                    if (!shotgun && currentWeapon == 5)
+                    {
+                        currentWeapon--;
+                    }
+
+
+                    if (!sniper && currentWeapon == 4)
+                    {
+                        currentWeapon--;
+                    }
+
+                    gm.UpdateUI (currentWeapon, bullets);
 				}
 
 				if (XCI.GetAxis (XboxAxis.RightStickX) > 0.5f || XCI.GetAxis (XboxAxis.RightStickX) < -0.5f || XCI.GetAxis (XboxAxis.RightStickY) > 0.5f || XCI.GetAxis (XboxAxis.RightStickY) < -0.5f) {
@@ -182,25 +235,62 @@ public class Player : MonoBehaviour
 				}
 
 				if (Input.GetKeyUp (KeyCode.E)) {
-					if (laser) {
-						laser = false;
-					}
-					currentWeapon++;
-					if (currentWeapon > 6) {
-						currentWeapon = 0;
-					}
-					gm.UpdateUI (currentWeapon, bullets);
-				}
+                    if (laser)
+                    {
+                        laser = false;
+                    }
+                    currentWeapon++;
+
+                    if (!sniper && currentWeapon == 4)
+                    {
+                        currentWeapon++;
+                    }
+
+                    if (!shotgun && currentWeapon == 5)
+                    {
+                        currentWeapon++;
+                    }
+                    if (!grenade && currentWeapon == 6)
+                    {
+                        currentWeapon++;
+                    }
+
+                    if (currentWeapon > 6)
+                    {
+                        currentWeapon = 0;
+                    }
+                    gm.UpdateUI(currentWeapon, bullets);
+                }
 				if (Input.GetKeyUp (KeyCode.Q)) {
-					if (laser) {
-						laser = false;
-					}
-					currentWeapon--;
-					if (currentWeapon < 0) {
-						currentWeapon = 6;
-					}
-					gm.UpdateUI (currentWeapon, bullets);
-				}
+                    if (laser)
+                    {
+                        laser = false;
+                    }
+                    currentWeapon--;
+                    if (currentWeapon < 0)
+                    {
+                        currentWeapon = 6;
+                    }
+
+
+                    if (!grenade && currentWeapon == 6)
+                    {
+                        currentWeapon--;
+                    }
+
+                    if (!shotgun && currentWeapon == 5)
+                    {
+                        currentWeapon--;
+                    }
+
+
+                    if (!sniper && currentWeapon == 4)
+                    {
+                        currentWeapon--;
+                    }
+
+                    gm.UpdateUI(currentWeapon, bullets);
+                }
 
 				//shooting direction
 				if (Input.GetKey (KeyCode.U) || Input.GetKey (KeyCode.O) || Input.GetKey (KeyCode.M) || Input.GetKey (KeyCode.Period)) {
