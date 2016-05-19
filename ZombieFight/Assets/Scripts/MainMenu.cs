@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour {
 		// Make the Shop Manager Exist
 		ShopManager sm = new ShopManager();
 		sm.Setup ();
+		HighScoreManager.LoadScores();
 
 		// RESET ALL DATA
 		//ShopManager.resetUpgrades();
