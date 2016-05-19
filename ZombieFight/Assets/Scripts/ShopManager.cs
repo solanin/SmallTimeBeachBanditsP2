@@ -93,6 +93,9 @@ public class ShopManager : MonoBehaviour
 		cost[5] = 350;
 		cost[6] = 550;
 		cost[7] = 750;
+
+		// Load
+		LoadUpgrades();
 	}
 
 

@@ -15,6 +15,8 @@ public class HighScoreManager : MonoBehaviour {
 	void Start () {
 		LoadScores ();
 		UpdateLabels ();
+
+		GameObject.Find("total").GetComponent<TextMesh>().text = "Total Kills: " + PlayerPrefs.GetInt("TOTAL KILL");
 	}
 
 	public static void LoadScores () {
