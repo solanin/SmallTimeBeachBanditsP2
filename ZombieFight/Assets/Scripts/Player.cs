@@ -491,7 +491,7 @@ public class Player : MonoBehaviour
                 if (!immune && !health.isDead())
                 {
                     immune = true;
-                    health.takeDamage(5.0f);
+                    health.takeDamage(10.0f);
                     if (health.isDead())
                     {
                         gm.EndGame();
@@ -559,7 +559,7 @@ public class Player : MonoBehaviour
         if (col.gameObject.tag == "Enemy" && !immune && !health.isDead())
         {
             immune = true;
-            health.takeDamage(5.0f);
+            health.takeDamage(10.0f);
             if (health.isDead())
             {
                 gm.EndGame();
